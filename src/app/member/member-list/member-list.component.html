@@ -1,0 +1,193 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
+      <a class="nav-logo-name" href="/member-list">TACA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/member-list">Membership</a></li>
+      <li><a href="/locker-add-edit">Locker</a></li>
+      <li><a href="/judge-cost-add-edit">Judge Cost</a></li>
+      <li><a href="/advocate-donation-add">Advocate Donation</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="sub-menu">
+  <ul class="nav navbar-nav">
+    <li class="active-white"><a href="/member-list">Member List</a></li>
+    <li><a href="/member-add-edit">Member Add/Edit</a></li>
+    <li><a href="/member-payment">Make Payment</a></li>
+    <li><a href="/member-report">Report</a></li>
+  </ul>
+</div>
+<div class="member-section height-100">
+  <div class="table-div">
+    <div class="row pad-bottom-25">
+      <div class="col-sm-6">
+        <h2>Total Members: {{memberCount}}</h2>
+      </div>
+      <div class="col-sm-6 pad-top-20">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+          <input id="searchMember" type="text" class="form-control" [(ngModel)]="search" name="searchMember" (ngModelChange)="filter($event)" placeholder="Search Member">
+        </div>    
+      </div>
+    </div>
+    <table id="members-list" class="table table-bordered table-hover table-responsive" [mfData]="responseData"
+      #mf="mfDataTable" [mfRowsOnPage]="5">
+      <thead>
+        <tr>
+          <th>
+            <mfDefaultSorter by="roll_no">Roll No</mfDefaultSorter>
+          </th>
+          <th>
+            Photo
+          </th>
+          <th>
+            <mfDefaultSorter by="name">Name</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="mobile_number">Mobile</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="email">Email</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="advocate_name">Advocate Name</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="advocate_home_address">Address</mfDefaultSorter>
+          </th>
+          <th>
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mf.data">
+          <td>{{item.roll_no}}</td>
+          <td class="text-center"><img src="./assets/images/member_photos/{{item.roll_no}}.jpg"  onerror="this.src='./assets/images/member_photos/default.jpg';"></td>
+          <td>{{item.name}}</td>
+          <td>{{item.mobile_number}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.advocate_name}}</td>
+          <td>{{item.home_address}}</td>
+          <td>
+            <a tooltip="View" placement="bottom" (click)="openMemberModal(item,memberView);"><span class="glyphicon glyphicon-eye-open"></span></a>
+            <a tooltip="Edit" placement="bottom" show-delay="500"  (click)="openEditScreen(item);"><span class="glyphicon glyphicon-edit"></span></a>
+            <a tooltip="Payment" placement="bottom" show-delay="500" (click)="openPaymentScreen(item);"><span class="glyphicon glyphicon-briefcase"></span></a>
+            <a tooltip="Locker" placement="bottom" show-delay="500" (click)="openAddLockerScreen(item);"><span class="glyphicon glyphicon-lock"></span></a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+
+  <div class="row">
+    <ng-template #memberView>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Member Detail</h4>
+        <button type="button" class="close pull-right" (click)="modalRef.hide()" aria-label="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12 text-center">            
+              <img class="img-circle" src="/assets/images/member_photos/{{memberViewData.roll_no}}.jpg"/>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <h2>{{name}}</h2>
+        </div>
+
+        <div class="row">
+          <table id="member-view-table" class="table">
+            <tbody>
+              <tr>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Mobile Number</label></div>
+                  <div class="mem-detail-value-div pl-5"><span class="mem-detail-value">{{memberViewData.mobile_number || "Not Available"}}</span></div>
+                </td>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Email Id</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.email || "Not Available"}}</span></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Father's Name</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.father_name || "Not Available"}}</span></div>
+                </td>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Blood Group</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.blood_group || "Not Available"}}</span></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Home Address</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.home_address || "Not Available"}}</span></div>
+                </td>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">DOB</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.dob || "Not Available"}}</span></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Office Address</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.office_address || "Not Available"}}</span></div>
+                </td>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Name</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_name || "Not Available"}}</span></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Home Address</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_home_address || "Not Available"}}</span></div>
+                </td>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Office Address</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_office_address || "Not Available"}}</span></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Mobile Number</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_mobile_number || "Not Available"}}</span></div>
+                </td>
+                <td>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Email</label></div>
+                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_email || "Not Available"}}</span></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </ng-template>
+  </div>
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>

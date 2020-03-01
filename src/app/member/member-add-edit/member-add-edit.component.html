@@ -1,0 +1,167 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
+      <a class="nav-logo-name" href="/member-list">TACA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/member-list">Membership</a></li>
+      <li><a href="/locker-add-edit">Locker</a></li>
+      <li><a href="/judge-cost-add-edit">Judge Cost</a></li>
+      <li><a href="/advocate-donation-add">Advocate Donation</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="sub-menu">
+  <ul class="nav navbar-nav">
+    <li><a href="/member-list">Member List</a></li>
+    <li class="active-white"><a href="/member-add-edit">Member Add/Edit</a></li>
+    <li><a href="/member-payment">Make Payment</a></li>
+    <li><a href="/member-report">Report</a></li>
+  </ul>
+</div>
+<div class="member-section height-100">
+    <h2 class="text-center" *ngIf="!editFlag">Add User</h2>
+    <h2 class="text-center" *ngIf="editFlag">Edit User</h2>
+    <div class="row m-0">
+
+        <div class="col-sm-2 text-center">
+          <img class="memberPhoto" src="./assets/images/member_photos/{{memberRollNo}}.jpg" onerror="this.src='./assets/images/member_photos/default.jpg';">
+          <input style="display: none" type="file" (change)="onFileUpload($event)" #selectFile>
+          <!-- <button class="btn margin-top-down-15" (click)="selectFile.click()">Change Photo</button> -->
+          <form [formGroup]="flagForm">
+            <label class="customCheckBoxLabel">LifeTime Member
+              <input type="checkbox" formControlName ="lifeTimeMemberFlag"
+              (click)="selectCheckBox(check_box_type.LIFE_TIME_MEMBER)" name="lifeTimeMemberFlag" id="lifeTimeMemberFlag"> 
+              <span class="checkmark"></span>
+            </label>
+            <label class="customCheckBoxLabel">Welfare Fund member
+              <input type="checkbox" formControlName ="welfareFundMemberFlag"
+              (click)="selectCheckBox(check_box_type.WELFARE_FUND_MEMBER)" name="welfareFundMemberFlag" id="welfareFundMemberFlag">
+              <span class="checkmark"></span>
+            </label>
+            <label class="customCheckBoxLabel">In Active
+              <input type="checkbox" formControlName ="isInActiveMember"
+              (click)="selectCheckBox(check_box_type.IN_ACTIVE)" name="isInActiveMember" id="isInActiveMember">
+              <span class="checkmark"></span>
+            </label>
+            <select class="form-control" *ngIf="currentlyChecked === check_box_type.IN_ACTIVE"   formControlName="inActiveType" >
+              <option [value]="type" *ngFor="let type of inActiveTypes">{{type}}</option>
+            </select>
+          </form>
+        </div>
+        <form [formGroup]="addForm">
+        <div class="col-sm-5">
+            <div class="form-group">
+                <label for="rollNo">Roll No:</label>
+                <input type="rollNo" formControlName="rollNo" (keyup)="removeError('rollNo')" (keydown.Tab)="getRollNoDetails($event)" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo">
+                <label class="error-label" *ngIf="rollNullFlag">Roll Number cannot be blank</label>
+              </div>
+          
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input formControlName="name" (keyup)="removeError('name')" placeholder="Name" name="name" class="form-control" id="name">
+                <label class="error-label" *ngIf="nameNullFlag">Member Name cannot be blank</label>
+              </div>
+
+              <div class="form-group">
+                <label for="doj">Date of Joining:</label>
+                <input formControlName="doj" id="doj" type="text" placeholder="Date of Joining" class="form-control"
+                bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+              </div>
+          
+              <div class="form-group">
+                <label for="mobileNumber">Mobile Number:</label>
+                <input formControlName="mobileNumber" placeholder="Mobile Number" name="mobileNumber" class="form-control" id="mobileNumber">
+              </div>
+
+              <div class="form-group">
+                <label for="homeAddress">Home Address:</label>
+                <input formControlName="homeAddress" placeholder="Home Address" name="homeAddress" class="form-control" id="homeAddress">
+              </div>
+
+              <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input formControlName="dob" id="dob" type="text" placeholder="Date of Birth" class="form-control"
+                bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+              </div>
+
+              <div class="form-group">
+                <label for="officeAddress">Office Address: </label>
+                <input formControlName="officeAddress" placeholder="Office Address" name="officeAddress" class="form-control" id="officeAddress">
+              </div>
+
+              <div class="form-group">
+                <label for="advocateName">Advocate Name:</label>
+                <input formControlName="advocateName" placeholder="Advocate Name" name="advocateName" class="form-control" id="advocateName">
+              </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+                <label for="fatherName">Father Name:</label>
+                <input type="fatherName" formControlName="fatherName" placeholder="Father Name" name="fatherName" class="form-control" id="fatherName">
+              </div>
+          
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input formControlName="email" placeholder="Email" name="email" class="form-control" id="email">
+              </div>
+          
+              <div class="form-group">
+                <label for="bloodGroup">Blood Group:</label>
+                <input formControlName="bloodGroup" placeholder="Blood Group" name="bloodGroup" class="form-control" id="bloodGroup">
+              </div>
+
+              <div class="form-group">
+                <label for="advocateHomeAddress">Advocate Home Address: </label>
+                <input formControlName="advocateHomeAddress" placeholder="Advocate Home Address" name="advocateHomeAddress" class="form-control" id="advocateHomeAddress">
+              </div>
+
+              <div class="form-group">
+                <label for="advocateOfficeAddress">Advocate Office Address: </label>
+                <input formControlName="advocateOfficeAddress" placeholder="Advocate Office Address" name="advocateOfficeAddress" class="form-control" id="advocateOfficeAddress">
+              </div>
+
+              <div class="form-group">
+                <label for="advocateMobileNumber">Advocate Mobile Number:</label>
+                <input formControlName="advocateMobileNumber" placeholder="Advocate Mobile Number" name="advocateMobileNumber" class="form-control" id="advocateMobileNumber">
+              </div>
+
+              <div class="form-group">
+                <label for="advocateEmail">Advocate Email:</label>
+                <input formControlName="advocateEmail" placeholder="Advocate Email" name="advocateEmail" class="form-control" id="advocateEmail">
+              </div>
+              
+              <div *ngIf="!editFlag" class="add-clear-btn-div">
+                <button class="btn btn-success margin-right-15 " (click)="onSubmit(confirmFlags)">Add Member</button>
+                <button class="btn btn-success" (click)="clearForm()">Clear</button>
+              </div>
+
+              <div *ngIf="editFlag" class="add-clear-btn-div">
+                <button class="btn btn-success margin-right-15 " (click)="onSubmit(confirmFlags)">Update Member</button>
+                <button class="btn btn-success" (click)="clearForm()">Clear</button>
+              </div>
+        </div>
+    </form>
+    </div>
+
+    <div class="row">
+      <ng-template #confirmFlags>
+        <div class="modal-header">
+            Header
+          </div>
+          <div class="modal-body">
+            Body
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success ">Confirm</button>
+          </div>
+        </ng-template>
+    </div>
+
+
+  </div>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>

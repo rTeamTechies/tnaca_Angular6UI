@@ -1,0 +1,118 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
+      <a class="nav-logo-name" href="/member-list">TACA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/member-list">Membership</a></li>
+      <li class="active"><a href="/locker-add-edit">Locker</a></li>
+      <li><a href="/judge-cost-add-edit">Judge Cost</a></li>
+      <li><a href="/advocate-donation-add">Advocate Donation</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="sub-menu">
+  <ul class="nav navbar-nav">
+    <li><a href="/locker-add-edit">Locker Add/Edit</a></li>
+    <li><a href="/locker-surrender">Locker Surrender</a></li>
+    <li class="active-white"><a href="/locker-list">Report</a></li>
+  </ul>
+</div>
+
+<div class="member-section height-100">
+
+
+  <div class="row m-0 padding-top-15">
+    <div id="report-input" class="col-sm-8 text-right pad-top-10"  style="display:flex; flex-direction: row; justify-content: left; align-items: baseline"> 
+      <div>
+        <label>Report</label>  
+      </div>
+      <div class="padding-left-15">
+        <select id="locker-report-select" class="form-control" [(ngModel)]="selectedReportType" (ngModelChange) ="changeFunc()">
+          <option [ngValue]="type.id" *ngFor="let type of reportTypes">{{type.title}}</option>
+        </select>  
+      </div>
+      <div class="padding-left-15" *ngIf = "searchByRollNo">
+        <input type="text" [(ngModel)]="enteredRollNo" name="rollNo" placeholder="Roll Number" class="question" id="rollNo" required autocomplete="off" />        
+      </div>
+
+      <div class="padding-left-15" *ngIf = "searchByDateRange">
+        <input [(ngModel)]="enteredFromDate"  id="enteredFromDate" type="text" placeholder="Start Date" class="form-control"
+        bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+      </div>
+
+      <div class="padding-left-15" *ngIf = "searchByDateRange">
+        <input [(ngModel)]="enteredToDate" id="enteredToDate" type="text" placeholder="End Date" class="form-control"
+        bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+      </div>
+
+      <div class="padding-left-15">
+        <button class="btn btn-success" (click)="generateReport()">Generate</button>
+      </div>
+    </div>
+    <div  class="col-sm-4">
+
+    </div>
+  </div> 
+
+  <div class="row m-0 padding-top-15">
+    <div class="col-sm-12">
+      <!-- Billing Details Table-->
+      <table id="member-billing-datatable" class="table table-bordered table-hover table-responsive"
+        [mfData]="billingDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="5"
+        *ngIf="billingDetailsResponse.length > 0">
+        <thead>
+          <tr>
+            <th>
+              <mfDefaultSorter by="bill_no">Receipt No</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="bill_date">Bill Date</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="roll_no">Roll No</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="name">Member name</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="from_date">From Date</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="to_date">To Date</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="amount">Amount</mfDefaultSorter>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>{{item.bill_no}}</td>
+            <td>{{item.bill_date | date}}</td>
+            <td>{{item.roll_no}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.from_date | date}}</td>
+            <td>{{item.to_date | date}}</td>
+            <td>{{item.amount}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+
+
+</div>

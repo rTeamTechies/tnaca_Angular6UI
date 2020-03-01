@@ -1,0 +1,130 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
+      <a class="nav-logo-name" href="/member-list">TACA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/member-list">Membership</a></li>
+      <li><a href="/locker-add-edit">Locker</a></li>
+      <li><a href="/judge-cost-add-edit">Judge Cost</a></li>
+      <li class="active"><a href="/advocate-donation-add">Advocate Donation</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="sub-menu">
+  <ul class="nav navbar-nav">
+    <li class="active-white"><a href="/advocate-donation-add">Advocate Donation</a></li>
+    <li><a href="/advocate-donation-list">Report</a></li>
+  </ul>
+</div>
+<div class="member-section height-100">
+  <h2 class="no-print margin-left-15">Advocate Donation</h2>
+  <div class="row m-0" id="addAdvDonationDiv">
+    <form [formGroup]="addAdvDonationForm">
+      <div class="col-sm-12">
+          
+        <div class="form-group">
+          <label for="advName">Advocate Name:</label>
+          <input formControlName="advName" placeholder="Advocate Name" name="advName" class="form-control" id="advName">
+        </div>
+
+        <div class="form-group">
+          <label for="amount">Amount:</label>
+          <input formControlName="amount" placeholder="Amount" name="amount" class="form-control"
+            id="amount">
+        </div>
+
+        <div class="form-group">
+          <label for="paymentType">Payment Type:</label>
+          <select class="form-control" formControlName="paymentType" >
+            <option [value]="type" *ngFor="let type of paymentTypes">{{type}}</option>
+          </select>
+        </div>
+
+        <div class="add-clear-btn-div">
+          <button class="btn btn-success margin-right-15 " (click)="onSubmit()">Submit & Print</button>
+          <button class="btn btn-success" (click)="clearForm()">Clear</button>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="print-section">
+  <div class="row">
+    <div class="col-md-12 receipt-header">
+      <div style="min-width: 32%;">
+        <h4>Regn. No. 89/69</h4>
+        <h4>Estd: 1913</h4>
+      </div>
+      <div style="min-width: 32%;padding-left: 20px;"><img class="print-logo" src="./assets/images/taca_logo.jfif"></div>
+      <div style="min-width: 32%;">
+        <h4>Email: tnaca1913@gmail.com</h4>
+        <h4>Phone: 7358216573</h4>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row border-bottom">
+    <div class="col-md-12 text-center">
+      <h2>Tamilnadu Advocates Clerks Association</h2>
+      <h3>High Court, Chennai</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <h3>Receipt No:<span [innerHTML]="generatedBillNo"></span></h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <h3>Advocate Donation Receipt</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>S. No</th>
+            <th>Advocate Name</th>
+            <th>Amount</th>
+            <th>Payment Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>{{this.addAdvDonationForm.value.advName}}</td>
+            <td>{{this.addAdvDonationForm.value.amount}}</td>
+            <td>{{this.addAdvDonationForm.value.paymentType}}</td>            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <b>Amount in Words: <span [innerHTML]="amountInWords"></span></b>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 text-right pad-100">
+      <b>Treasurer</b>
+    </div>
+  </div>
+</div>

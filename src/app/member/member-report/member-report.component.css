@@ -1,0 +1,13 @@
+.pad-top-10{
+    padding-top: 10px;
+}
+
+input {
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+input:focus{
+    outline : none;
+}

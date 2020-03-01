@@ -1,0 +1,220 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
+      <a class="nav-logo-name" href="/member-list">TACA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/member-list">Membership</a></li>
+      <li class="active"><a href="/locker-add-edit">Locker</a></li>
+      <li><a href="/judge-cost-add-edit">Judge Cost</a></li>
+      <li><a href="/advocate-donation-add">Advocate Donation</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="sub-menu">
+  <ul class="nav navbar-nav">
+    <li class="active-white"><a href="/locker-add-edit">Locker Add/Edit</a></li>
+    <li><a href="/locker-surrender">Locker Surrender</a></li>
+    <li><a href="/locker-list">Report</a></li>
+  </ul>
+</div>
+
+<div id="lockerAddEditFormDiv" class="member-section height-100">
+  <div class="row m-0">
+    <div class="col-sm-5">
+      <h3 class="no-print">Member Locker</h3>
+      <form [formGroup]="addMemberLocker">
+
+        <div class="form-group">
+          <label for="rollNo">Roll No:</label>
+          <input formControlName="rollNo" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo" (keydown.Tab)="getRollNoDetails()">
+          <label class="error-label" *ngIf="rollNoNullFlag">Roll Number is mandatory.</label>
+        </div>
+
+        <div class="form-group">
+          <label for="Name">Name:</label>
+          <input [(ngModel)] = "memberName" formControlName="name" placeholder="Name" name="name" class="form-control" id="name">
+        </div>
+
+        <div class="form-group">
+          <label for="fromDate">From Date:</label>
+          <input formControlName="fromDate" id="fromDate" type="text" placeholder="From Date" class="form-control"
+            bsDatepicker [bsConfig]="{ isAnimated: true }">
+          <label class="error-label" *ngIf="fromDateNullFlag">From Date is mandatory.</label>
+        </div>
+
+        <div class="form-group">
+          <label for="toDate">To Date:</label>
+          <input formControlName="toDate" id="toDate" type="text"
+           placeholder="To Date"
+           class="form-control"
+           bsDatepicker
+           [bsConfig]="{ isAnimated: true }">
+           <label class="error-label" *ngIf="toDateNullFlag">To Date is mandatory.</label>
+        </div> 
+
+        <div class="form-group">
+          <label for="lockerId">Locker Number:</label>
+          <input formControlName="lockerId" placeholder="Locker Number" name="lockerId" (keydown.Tab)="checkLockerAvailability()" class="form-control"
+            id="lockerId">
+          <label class="error-label" *ngIf="lockerUnavailableFlag">Entered Locker Number is already alloted.</label>
+        </div>
+
+        <div class="form-group">
+          <label for="amount">Amount:</label>
+          <input formControlName="amount" placeholder="Amount" name="amount" class="form-control"
+            id="amount">
+            <label class="error-label" *ngIf="amountNullFlag">Amount is mandatory.</label>
+        </div>
+       
+        <div class="add-clear-btn-div">
+          <button class="btn btn-success margin-right-15 " (click)="onSubmit()">Submit & Print</button>
+          <button class="btn btn-success" (click)="clearForm()">Clear</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-sm-7">
+      <h3>Payment History</h3>
+      <table id="member-locker-history" class="table table-bordered table-hover table-responsive"
+        [mfData]="memberLockertHistoryres" #mf="mfDataTable" [mfRowsOnPage]="5"
+        *ngIf="memberLockertHistoryres.length > 0">
+        <thead>
+          <tr>
+            <th>
+              <mfDefaultSorter by="bill_no">Receipt No</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="bill_date">Receipt Date</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="locker_id">Locker Number</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="from_date">From Date</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="to_date">To Date</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="amount">Amount</mfDefaultSorter>
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>{{item.bill_no}}</td>
+            <td>{{item.bill_date | date}}</td>
+            <td>{{item.locker_id}}</td>
+            <td>{{item.from_date | date}}</td>
+            <td>{{item.to_date | date}}</td>
+            <td>{{item.amount}}</td>
+            <td class="text-center">
+              <a tooltip="View & Print" placement="bottom" (click)="printBill(item);"><span
+                  class="glyphicon glyphicon-print"></span></a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <div *ngIf="memberLockertHistoryres.length === 0">
+        <img src="./assets/images/NoRecords.png"/>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="print-section">
+  <div class="row">
+   <div class="col-md-12 receipt-header">
+     <div style="min-width: 32%;">
+       <h4>Regn. No. 89/69</h4>
+       <h4>Estd: 1913</h4>
+     </div>
+     <div style="min-width: 32%;padding-left: 20px;"><img class="print-logo" src="./assets/images/taca_logo.jfif"></div>
+     <div style="min-width: 32%;">
+       <h4>Email: tnaca1913@gmail.com</h4>
+       <h4>Phone: 7358216573</h4>
+     </div>
+   </div>
+ </div>
+
+
+ <div class="row border-bottom">
+   <div class="col-md-12 text-center">
+     <h2>Tamilnadu Advocates Clerks Association</h2>
+     <h3>High Court, Chennai</h3>
+   </div>
+ </div>
+
+ <div class="row">
+   <div class="col-md-12 text-right">
+     <h3>Receipt No:<span [innerHTML]="generatedBillNo"></span></h3>
+   </div>
+ </div>
+
+ <div class="row">
+   <div class="col-sm-12 text-center">
+     <h3>Locker Payment Receipt</h3>
+   </div>
+ </div>
+
+ <div class="row">
+   <div class="col-md-12">
+     <table class="table table-bordered">
+       <thead>
+         <tr>
+           <th>S. No</th>
+           <th>Member Roll No</th>
+           <th>Member Name</th>
+           <th>Locker Number</th>
+           <th>From Date</th>
+           <th>To Date</th>
+           <th>Amount</th>
+           <th>Payment Type</th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr>
+           <td>1</td>
+           <td>{{this.addMemberLocker.value.rollNo}}</td>
+           <td>{{this.addMemberLocker.value.name}}</td>
+           <td>{{this.addMemberLocker.value.lockerId}}</td>
+           <td>{{this.addMemberLocker.value.fromDate}}</td>
+           <td>{{this.addMemberLocker.value.toDate}}</td>
+           <td>{{this.addMemberLocker.value.amount}}</td>
+           <td>Cash</td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+ </div>
+
+ <div class="row">
+   <div class="col-md-12">
+     <b class="hide">Amount in Words: <span [innerHTML]="amountInWords"></span></b>
+   </div>
+ </div>
+
+ <div class="row">
+   <div class="col-md-12 text-right pad-100">
+     <b>Treasurer</b>
+   </div>
+ </div>
+</div>

@@ -1,0 +1,78 @@
+.text-right {
+	text-align: right;
+}
+
+.post-card {
+	border: 1px solid black;
+	padding: 10px;
+	margin: 0 !important;
+}
+
+.pad-10{
+	padding: 10px;
+}
+
+.mem-photo img{
+	width: 125%;
+	border-radius: 25px;
+}
+
+.member-list-section {
+	padding: 10px;
+}
+
+.pad-bottom-10 {
+	padding-bottom: 10px;
+}
+
+.table-div{
+	padding: 30px;
+}
+
+#members-list td a{
+	padding: 10px;
+}
+
+/* .mem-profile-photo {
+	width: 100px;
+	height: 100px;
+} */
+
+.mem-detail-attribute {
+	border: 1px solid #2c2ca5;
+    border-radius: 50px;
+    padding: 4px;
+	color: #2c2ca5;
+	font-size: 12px;
+}
+
+.mem-detail-value-div {
+	padding-left: 25px;
+}
+
+#members-list img {
+	width : 75px;
+	height: 75px;
+	border-radius: 50%;
+}
+
+table#members-list > thead > tr > th {
+    color: #337ab7;
+}
+
+.pad-bottom-25 {
+	padding-bottom: 25px;
+}
+
+#searchMember {
+	width: 50%;
+}
+
+.pad-top-20 {
+	padding-top: 20px;
+}
+
+table#member-view-table td {
+    max-width: 190px;
+}
+

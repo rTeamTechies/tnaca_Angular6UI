@@ -1,0 +1,48 @@
+#lockerAddEditFormDiv input{
+    width: 70%;
+}
+
+
+
+.print-section {
+    display: none;
+}
+
+@media print {
+    .print-section {
+      display: block;
+    }
+  
+    #lockerAddEditFormDiv, .sub-menu, .no-print {
+      display: none;
+    }
+}
+
+.print-logo {
+    width: 125px;
+}
+
+.print-section {
+    padding: 20px;
+    border: 1px solid #000000;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #000000;
+}
+
+.pad-100 {
+    padding: 100px;
+}
+
+.receipt-header div {
+    display: inline-block;
+}
+
+.receipt-header div:first-child {
+    float: left;
+}
+
+.receipt-header div:last-child {
+    float: right;
+}

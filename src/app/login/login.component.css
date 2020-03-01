@@ -1,0 +1,57 @@
+body{
+	width:100%;
+	background-color: #e1dff3;
+}
+
+.colorname {
+	background-color: blue;
+}
+
+.colorname1 {
+	background-color: red;
+}
+
+.login-left-pane {
+	text-align : center;
+	position: relative;
+	height: 100%;
+	border-right: 1px solid #6f67b7;
+}
+
+.login-left-pane > div {
+	position: absolute;
+	top: 30%;
+	width: calc(100% - 30px);
+}
+
+.login-left-pane img {
+	width: 15%;
+    border-radius: 100px;
+}
+
+.login-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+}
+
+.login-button:hover {
+  opacity: 0.8;
+}
+
+.login-right-pane {
+	position: relative;
+	height: 100%;
+}
+
+.login-right-pane > div {
+	position: absolute;
+    top: 30%;
+    left: 25%;
+    height: 50%;
+    width: 50%;
+}

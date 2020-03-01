@@ -1,0 +1,28 @@
+<div class="container-fluid height-100">
+  <div class="row height-100">
+     <div class="col-sm-5 login-left-pane">
+          <div>
+              <img src="./assets/images/taca_logo.jfif"/>
+              <h1>Tamilnadu Advocates Clerks Association</h1>
+              <h2>High Court, Chennai </h2>
+          </div>
+     </div>
+      <div class="col-sm-7 login-right-pane">
+          <div>
+                  <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="username" class="form-control" (keyup)="removeError('uname')" [(ngModel)]="login_uname" placeholder="Enter username">
+                    <label class="error-label" *ngIf="userNameNullFlag">Username cannot be blank</label>
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="password" class="form-control" (keyup)="removeError('pwd')" [(ngModel)]="login_pwd" placeholder="Enter password">
+                    <label class="error-label" *ngIf="pwdNullFlag">Password cannot be blank</label>
+                    <label class="error-label" *ngIf="invalidLoginFlag">Username/Password is incorrect.</label>
+                  </div>
+                  <button type="" class="btn btn-primary" (click)="navigateToMemberScreen()">Submit</button>			
+          </div>
+      </div>
+  </div>
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>

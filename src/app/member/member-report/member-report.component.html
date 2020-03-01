@@ -1,0 +1,182 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
+      <a class="nav-logo-name" href="/member-list">TACA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/member-list">Membership</a></li>
+      <li><a href="/locker-add-edit">Locker</a></li>
+      <li><a href="/judge-cost-add-edit">Judge Cost</a></li>
+      <li><a href="/advocate-donation-add">Advocate Donation</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="sub-menu">
+  <ul class="nav navbar-nav">
+    <li><a href="/member-list">Member List</a></li>
+    <li><a href="/member-add-edit">Member Add/Edit</a></li>
+    <li><a href="/member-payment">Make Payment</a></li>
+    <li class="active-white"><a href="/member-report">Report</a></li>
+  </ul>
+</div>
+<div id="memberReportDiv" class="member-section height-100">
+
+  <div class="row m-0 padding-top-15">
+    <div id="report-input" class="col-sm-8 text-right pad-top-10"  style="display:flex; flex-direction: row; justify-content: left; align-items: baseline"> 
+      <div>
+        <label>Report</label>  
+      </div>
+      <div class="padding-left-15">
+        <select class="form-control" [(ngModel)]="selectedReportType" (ngModelChange) ="showHideInputs()">
+          <option [ngValue]="type.id" *ngFor="let type of reportTypes">{{type.title}}</option>
+        </select>  
+      </div>
+      <div class="padding-left-15" *ngIf ="reportByRollNoFlag">
+        <input type="text" [(ngModel)]="enteredRollNo" name="rollNo" placeholder="Roll Number" class="question" id="rollNo" required autocomplete="off" />        
+      </div>
+      <div class="padding-left-15" *ngIf ="reportByYearFlag">
+        <select class="form-control width-100" [(ngModel)]="enteredYear" >
+          <option [value]="type" *ngFor="let type of year">{{type}}</option>
+        </select>     
+      </div>
+      <div class="padding-left-15">
+        <button class="btn btn-success no-print" (click)="generateReport()">Generate</button>
+      </div>
+    </div>
+    <div  class="col-sm-4 text-right no-print">
+      <a tooltip="Print Page" placement="bottom" (click)="printPage();"><span
+        class="glyphicon glyphicon-print"  style="font-size: 25px;"></span></a>
+    </div>
+  </div>
+
+  <div class="row m-0 padding-top-15 text-center" *ngIf="nullResponseFlag">
+    <div class="col-sm-12">
+        <img src="./assets/images/NoRecords.png"/>
+      </div>
+  </div>
+
+  <div class="row m-0 padding-top-15" *ngIf="showAmountAndCount">
+    <div class="col-sm-6">
+        <h3>Record Count: {{totalRecords}}</h3>
+    </div>
+    <div class="col-sm-6 text-right">
+        <h3>Total Amount: {{totalAmount}}</h3>
+    </div>
+  </div>
+
+  <div class="row m-0 padding-top-15">
+    <div class="col-sm-12">
+      <!-- Billing Details Table-->
+      <table id="member-billing-datatable" class="table table-bordered table-hover table-responsive"
+        [mfData]="billingDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="25"
+        *ngIf="billingDetailsResponse.length > 0">
+        <thead>
+          <tr>
+            <th>
+              <mfDefaultSorter by="bill_no">Receipt No</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="bill_date">Bill Date</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="roll_no">Roll No</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="name">Member name</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="amount">Amount</mfDefaultSorter>
+            </th>
+            <!-- <th class="no-print">
+              Action
+            </th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>{{item.bill_no}}</td>
+            <td>{{item.bill_date | date}}</td>
+            <td>{{item.roll_no}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.amount}}</td>
+            <!-- <td class="text-center no-print">
+              <a tooltip="View" placement="bottom" (click)="printBill(item);"><span
+                  class="glyphicon glyphicon-print"></span></a>
+            </td> -->
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="row m-0 padding-top-15">
+    <div class="col-sm-12">
+      <!-- Member Details Table-->
+      <table id="member-billing-datatable" class="table table-bordered table-hover table-responsive"
+        [mfData]="memberDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="25" *ngIf="memberDetailsResponse.length > 0">
+        <thead>
+          <tr>
+            <th>
+              <mfDefaultSorter by="roll_no">Roll No</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="name">Member name</mfDefaultSorter>
+            </th>
+            <th class="no-print">
+              <mfDefaultSorter by="doj">Date Of Joining</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="mobile_number">Mobile</mfDefaultSorter>
+            </th>
+            <th class="no-print">
+              <mfDefaultSorter by="email">Email</mfDefaultSorter>
+            </th>
+            <th class="no-print">
+              <mfDefaultSorter by="advocate_name">Advocate Name</mfDefaultSorter>
+            </th>
+            <th >
+              <mfDefaultSorter by="home_address">Address</mfDefaultSorter>
+            </th >
+            <!-- <th class="no-print">
+              Action
+            </th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>{{item.roll_no}}</td>
+            <td>{{item.name}}</td>
+            <td class="no-print">{{item.doj | date}}</td>
+            <td>{{item.mobile_number}}</td>
+            <td class="no-print">{{item.email}}</td>
+            <td class="no-print">{{item.advocate_name}}</td>
+            <td>{{item.home_address}}</td>
+            <!-- <td class="text-center no-print">
+              <a tooltip="View" placement="bottom" (click)="printBill(item);"><span
+                  class="glyphicon glyphicon-print"></span></a>
+            </td> -->
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,223 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
+      <a class="nav-logo-name" href="/member-list">TACA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/member-list">Membership</a></li>
+      <li><a href="/locker-add-edit">Locker</a></li>
+      <li><a href="/judge-cost-add-edit">Judge Cost</a></li>
+      <li><a href="/advocate-donation-add">Advocate Donation</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="sub-menu">
+  <ul class="nav navbar-nav">
+    <li><a href="/member-list">Member List</a></li>
+    <li><a href="/member-add-edit">Member Add/Edit</a></li>
+    <li class="active-white"><a href="/member-payment">Make Payment</a></li>
+    <li><a href="/member-report">Report</a></li>
+  </ul>
+</div>
+<div id="paymentFormTab" class="member-section height-100">
+  <div id="membership-payment-div" class="row m-0">
+    <div class="col-sm-5">
+      <h3>Membership Payment</h3>
+      <form [formGroup]="paymentForm">
+        <div class="form-group">
+          <label for="rollNo">Roll No:</label>
+          <input type="rollNo" formControlName="rollNo" placeholder="Roll No" name="rollNo" class="form-control"
+            id="rollNo" (keydown.Tab)="getRollNoDetails()">
+        </div>
+        <div class="form-group">
+          <label for="name">Member Name:</label>
+          <input type="name" [(ngModel)] = "memberName" formControlName="name" placeholder="Member Name" name="name" class="form-control"
+            id="name">
+        </div>
+        <div class="form-group">
+          <div class="inline-block" style="min-width: 35%;">
+            <label for="fromDate">Subscription Type:</label>
+            <select class="form-control width-100" formControlName="subscriptionType">
+              <option [value]="type" *ngFor="let type of subscriptionType">{{type}}</option>
+            </select>
+          </div>
+          <div class="inline-block pad-lef-15" style="min-width: 35%;">
+            <label for="toDate">Subscription Year:</label>
+            <select class="form-control width-100" formControlName="subscriptionYear">
+              <option [value]="type" *ngFor="let type of subscriptionYear">{{type}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="amount">Membership Amount:</label>
+          <input type="amount" formControlName="amount" placeholder="Membership Amount" name="amount"
+            class="form-control" id="amount">
+        </div>
+
+        <div class="form-group">
+          <label for="amount">Payment Type:</label>
+          <select class="form-control" formControlName="paymentType" >
+            <option [value]="type" *ngFor="let type of paymentTypes">{{type}}</option>
+          </select>
+        </div>
+        <button class="btn btn-success" (click)="confirmPayment(confirmPaymentFlag)">Submit & Print</button>
+      </form>
+    </div>
+    <div class="col-sm-7">
+      <h3>Payment History</h3>
+      <table id="members-payment-history" class="table table-bordered table-hover table-responsive" [mfData]="paymentHistoryres"
+        #mf="mfDataTable" [mfRowsOnPage]="5" *ngIf="paymentHistoryres.length > 0">
+        <thead>
+          <tr>
+            <th>
+              <mfDefaultSorter by="bill_no">Bill No</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="bill_date">Bill Date</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="subscription_year">Subscription Year</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="amount">Amount</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="payment_type">Payment Type</mfDefaultSorter>
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>{{item.bill_no}}</td>
+            <td>{{item.bill_date | date}}</td>
+            <td>{{item.subscription_year}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.payment_type}}</td>
+            <td class="text-center">
+              <a tooltip="View & Print" placement="bottom" (click)="printBill(item);"><span
+                  class="glyphicon glyphicon-print"></span></a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <div *ngIf="paymentHistoryres.length === 0">
+        <img src="./assets/images/NoRecords.png"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="row no-print">
+    <ng-template #confirmPaymentFlag>
+      <div class="modal-header">
+          <h3>Confirm Payment Details</h3>
+        </div>
+        <div class="modal-body">
+          <p>Roll No: <b>{{this.paymentForm.value.rollNo}}</b></p>
+          <p>Name: <b>{{this.paymentForm.value.name}}</b></p>
+          <p>Subscription Year <b>{{this.paymentForm.value.subscriptionYear}}</b></p>
+          <p>Subscription Type: <b>{{this.paymentForm.value.subscriptionType}}</b></p>
+          <p>Amount: <b>{{this.paymentForm.value.amount}}</b></p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-success" (click) = "callPayment();modalRef.hide();">Confirm</button>
+          <button class="btn btn-danger" (click)= "clearForm();modalRef.hide();">Cancel</button>
+        </div>
+      </ng-template>
+  </div>
+
+
+</div>
+
+<div class="print-section">
+   <div class="row">
+    <div class="col-md-12 receipt-header">
+      <div style="min-width: 32%;">
+        <h4>Regn. No. 89/69</h4>
+        <h4>Estd: 1913</h4>
+      </div>
+      <div style="min-width: 32%;padding-left: 20px;"><img class="print-logo" src="./assets/images/taca_logo.jfif"></div>
+      <div style="min-width: 32%;">
+        <h4>Email: tnaca1913@gmail.com</h4>
+        <h4>Phone: 7358216573</h4>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row border-bottom">
+    <div class="col-md-12 text-center">
+      <h2>Tamilnadu Advocates Clerks Association</h2>
+      <h3>High Court, Chennai</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 text-right">
+      <h3>Receipt No:<span [innerHTML]="generatedBillNo"></span></h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <h3>MemberShip Payment Receipt</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>S. No</th>
+            <th>Member Roll No</th>
+            <th>Member Name</th>
+            <th>Membership From</th>
+            <th>Membership To</th>
+            <th>Amount</th>
+            <th>Payment Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>{{this.paymentForm.value.rollNo}}</td>
+            <td>{{this.paymentForm.value.name}}</td>
+            <td>{{this.paymentForm.value.fromDate}}</td>
+            <td>{{this.paymentForm.value.toDate}}</td>
+            <td>{{this.paymentForm.value.amount}}</td>
+            <td>Cash</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <b class="hide">Amount in Words: <span [innerHTML]="amountInWords"></span></b>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 text-right pad-100">
+      <b>Treasurer</b>
+    </div>
+  </div>
+</div>
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>

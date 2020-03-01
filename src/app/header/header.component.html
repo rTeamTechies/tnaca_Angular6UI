@@ -1,0 +1,27 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
+      <a class="nav-logo-name" href="#">TACA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li [ngClass]="{'active' : menu1Active}"><a href="/member-list">Membership</a></li>
+      <li [ngClass]="{'active' : menu2Active}"><a href="/locker-add-edit">Locker</a></li>
+      <li [ngClass]="{'active' : menu3Active}"><a href="/judge-cost-add-edit">Judge Cost</a></li>
+      <li [ngClass]="{'active' : menu4Active}"><a href="/advocate-donation-add">Advocate Donation</a></li>
+      <li [ngClass]="{'active' : menu5Active}"><a href="#">Settings</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+      <li><a href="Login.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<!-- <div class="sub-menu">
+  <ul class="nav navbar-nav">
+    <li [ngClass]="{'active-white' : subMenu1Active}"><a href="/member-list">Member List</a></li>
+    <li [ngClass]="{'active-white 
+    ' : subMenu2Active}"><a href="/member-add-edit">Member Add/Edit</a></li>
+    <li [ngClass]="{'active-white' : subMenu3Active}"><a href="/member-payment">Make Payment</a></li>
+  </ul>
+</div> -->
