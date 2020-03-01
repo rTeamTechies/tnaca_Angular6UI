@@ -1,0 +1,45 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
+      <a class="nav-logo-name" href="/member-list">TACA</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/member-list">Membership</a></li>
+      <li class="active"><a href="/locker-add-edit">Locker</a></li>
+      <li><a href="/judge-cost-add-edit">Judge Cost</a></li>
+      <li><a href="/advocate-donation-add">Advocate Donation</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="sub-menu">
+  <ul class="nav navbar-nav">
+    <li><a href="/locker-add-edit">Locker Add/Edit</a></li>
+    <li class="active-white"><a href="/locker-surrender">Locker Surrender</a></li>
+    <li><a href="/locker-list">Report</a></li>
+  </ul>
+</div>
+
+<div id="lockerAddEditFormDiv" class="member-section height-100">
+  <div class="row m-0">
+    <div class="col-sm-12">
+      <h3 class="no-print">Surrender Member Locker</h3>
+      <form [formGroup]="surrenderMemberLocker">
+        <div class="form-group">
+          <label for="billNo">Receipt No:</label>
+          <input formControlName="billNo" style="width:15%" placeholder="Receipt No" name="billNo" class="form-control"
+            id="billNo">
+        </div>
+       
+        <div class="add-clear-btn-div">
+          <button class="btn btn-success margin-right-15 " (click)="onSubmit()">Submit</button>
+          <button class="btn btn-success" (click)="clearForm()">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
