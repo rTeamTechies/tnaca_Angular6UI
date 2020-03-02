@@ -1,0 +1,110 @@
+/* You can add global styles to this file, and also import other style files */
+html, 
+body {
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.height-100{
+    height: 100%;
+}
+
+.width-100 {
+    width: 100% !important;
+}
+
+.active-white{
+    background-color: #ffffff;
+}
+
+.nav-logo {
+	width: 50px;
+    float: left;
+}
+
+.nav-logo-name {
+	float: left;
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+	margin-left: 0 !important;
+	color: #9d9d9d;
+	text-decoration: none;
+}
+
+.navbar{
+	border-radius: 0 !important;
+	margin-bottom: 0 !important;
+}
+
+.member-section {
+	background-color: #fff;
+	height: auto;
+}
+
+.sub-menu {
+    background-color: #dfdada;
+    width: 100%;
+	min-height: 50px;
+}
+
+.sub-menu a {
+	color: #000000 !important;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.margin-right-15 {
+    margin-right: 15px !important;
+}
+
+.margin-left-15 {
+    margin-left: 15px !important;
+}
+
+.padding-left-15 {
+    padding-left: 15px !important;
+}
+
+.padding-top-15 {
+    padding-top: 15px !important;
+}
+
+.width-50 {
+    width: 50% !important;
+}
+
+.width-25 {
+    width: 25%;
+}
+
+
+.inline-block {
+    display: inline-block;
+}
+
+
+.error-input{
+    border: red;
+}
+
+.error-label{
+    color: red;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+
+
+@media print {
+  .print-section {
+    display: block;
+  }
+
+  .sub-menu, .no-print {
+    display: none;
+  }
+}
