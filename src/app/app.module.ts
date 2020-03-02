@@ -30,6 +30,7 @@ import { AdvocateDonationAddComponent } from './advocatedonation/advocate-donati
 import { AdvocateDonationListComponent } from './advocatedonation/advocate-donation-list/advocate-donation-list.component';
 import { MemberReportComponent } from './member/member-report/member-report.component';
 import { LockerSurrenderComponent } from './locker/locker-surrender/locker-surrender.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { LockerSurrenderComponent } from './locker/locker-surrender/locker-surre
     AdvocateDonationAddComponent,
     AdvocateDonationListComponent,
     MemberReportComponent,
-    LockerSurrenderComponent
+    LockerSurrenderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

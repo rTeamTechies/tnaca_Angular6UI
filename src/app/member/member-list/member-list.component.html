@@ -1,8 +1,8 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <img src="./assets/images/taca_logo.jfif" class="nav-logo">
-      <a class="nav-logo-name" href="/member-list">TNACA</a>
+      <img src="./assets/images/logo.png" class="nav-logo">
+      <a class="nav-logo-name" href="/home">TNACA</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="/member-list">Membership</a></li>
@@ -17,6 +17,7 @@
 </nav>
 <div class="sub-menu">
   <ul class="nav navbar-nav">
+    <li><a href="/home">Home</a></li>
     <li class="active-white"><a href="/member-list">Member List</a></li>
     <li><a href="/member-add-edit">Member Add/Edit</a></li>
     <li><a href="/member-payment">Make Payment</a></li>
@@ -37,7 +38,7 @@
       </div>
     </div>
     <table id="members-list" class="table table-bordered table-hover table-responsive" [mfData]="responseData"
-      #mf="mfDataTable" [mfRowsOnPage]="5">
+      #mf="mfDataTable" [mfRowsOnPage]="50">
       <thead>
         <tr>
           <th>
@@ -86,7 +87,7 @@
       <tfoot>
         <tr>
           <td colspan="8">
-            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            <mfBootstrapPaginator></mfBootstrapPaginator>
           </td>
         </tr>
       </tfoot>

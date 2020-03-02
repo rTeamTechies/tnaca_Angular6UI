@@ -15,8 +15,10 @@ import { JudgeCostListComponent } from "./judgecost/judge-cost-list/judge-cost-l
 
 import { AdvocateDonationAddComponent } from "./advocatedonation/advocate-donation-add/advocate-donation-add.component";
 import { AdvocateDonationListComponent } from "./advocatedonation/advocate-donation-list/advocate-donation-list.component";
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'member-list', component: MemberListComponent },
   { path: 'member-add-edit', component: MemberAddEditComponent },

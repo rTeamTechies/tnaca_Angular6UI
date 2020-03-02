@@ -21,6 +21,9 @@ div#membership-payment-div input,select {
 @media print {
     .print-section {
       display: block;
+      padding: 20px;
+      border: 1px solid #000000;
+      /* font-size: 20px !important; */
     }
   
     #paymentFormTab, .sub-menu, .no-print {
@@ -30,11 +33,6 @@ div#membership-payment-div input,select {
 
 .print-logo {
     width: 125px;
-}
-
-.print-section {
-    padding: 20px;
-    border: 1px solid #000000;
 }
 
 .border-bottom {

@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         .subscribe((response: any) => {
           if(response.status == "Success"){
             this.loading = false;
-            this.router.navigate(['member-list']);
+            this.router.navigate(['home']);
           }else if(response.status == "Failure"){
             this.loading = false;
             this.invalidLoginFlag = true;
