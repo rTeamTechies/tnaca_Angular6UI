@@ -23,7 +23,7 @@ export class MemberAddEditComponent implements OnInit {
   public addForm: FormGroup;
   public flagForm: FormGroup;
   public memberRollNo: any;
-  public inActiveTypes: any = ['Select Type', 'Removed', 'Promoted To Judge', 'Demise'];
+  public inActiveTypes: any = ['SELECT TYPE', 'REMOVED', 'PROMOTED AS ADVOCATE', 'DEMISE'];
   public rollNullFlag: boolean = false;
   public nameNullFlag: boolean = false;
   check_box_type = CheckBoxType;
@@ -54,7 +54,7 @@ export class MemberAddEditComponent implements OnInit {
         welfareFundMemberFlag : [false],
         lifeTimeMemberFlag: [false],
         isInActiveMember: [false],
-        inActiveType : ['Select Type']
+        inActiveType : ['SELECT TYPE']
       });
 
       this.addForm = this.formBuilder.group({     
@@ -88,7 +88,7 @@ export class MemberAddEditComponent implements OnInit {
         welfareFundMemberFlag : [false],
         lifeTimeMemberFlag: [false],
         isInActiveMember: [false],
-        inActiveType : ['Select Type']
+        inActiveType : ['SELECT TYPE']
       });
       this.addForm = this.formBuilder.group({      
         rollNo: ['', Validators.required],
@@ -125,15 +125,13 @@ export class MemberAddEditComponent implements OnInit {
         isInActiveMember: [this.data.memberDataTransfer.active_flag === 1 ? false : true],
         inActiveType:[this.data.memberDataTransfer.inactive_reason]
       });
-     // this.selectCheckBox(2);
-      // if(this.data.memberDataTransfer.active_flag == 0){
-      //   this.flagForm.controls.inActiveType.patchValue(this.data.memberDataTransfer.inactive_reason);
-        
-      // }
+
+      if(this.data.memberDataTransfer.active_flag != 1){
+        this.selectCheckBox(2);
+      }
   }
 
   selectCheckBox(targetType: CheckBoxType) {
-    // If the checkbox was already checked, clear the currentlyChecked variable
     if(this.currentlyChecked === targetType) {
       this.currentlyChecked = CheckBoxType.NONE;
       return;

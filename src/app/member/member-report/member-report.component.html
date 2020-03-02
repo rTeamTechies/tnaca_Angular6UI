@@ -37,12 +37,21 @@
         </select>  
       </div>
       <div class="padding-left-15" *ngIf ="reportByRollNoFlag">
-        <input type="text" [(ngModel)]="enteredRollNo" name="rollNo" placeholder="Roll Number" class="question" id="rollNo" required autocomplete="off" />        
+        <input type="text" [(ngModel)]="enteredRollNo" name="rollNo" autocomplete="off" placeholder="Roll Number" class="question" id="rollNo" required autocomplete="off" />        
       </div>
       <div class="padding-left-15" *ngIf ="reportByYearFlag">
         <select class="form-control width-100" [(ngModel)]="enteredYear" >
           <option [value]="type" *ngFor="let type of year">{{type}}</option>
         </select>     
+      </div>
+      <div class="padding-left-15" *ngIf = "searchByDateRange">
+        <input [(ngModel)]="enteredFromDate"  id="enteredFromDate" type="text" autocomplete="off" placeholder="Start Date"
+        bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+      </div>
+
+      <div class="padding-left-15" *ngIf = "searchByDateRange">
+        <input [(ngModel)]="enteredToDate" id="enteredToDate" type="text" autocomplete="off" placeholder="End Date"
+        bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
       </div>
       <div class="padding-left-15">
         <button class="btn btn-success no-print" (click)="generateReport()">Generate</button>

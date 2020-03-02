@@ -34,13 +34,11 @@
           <!-- <button class="btn margin-top-down-15" (click)="selectFile.click()">Change Photo</button> -->
           <form [formGroup]="flagForm">
             <label class="customCheckBoxLabel">LifeTime Member
-              <input type="checkbox" formControlName ="lifeTimeMemberFlag"
-              (click)="selectCheckBox(check_box_type.LIFE_TIME_MEMBER)" name="lifeTimeMemberFlag" id="lifeTimeMemberFlag"> 
+              <input type="checkbox" formControlName ="lifeTimeMemberFlag" name="lifeTimeMemberFlag" id="lifeTimeMemberFlag"> 
               <span class="checkmark"></span>
             </label>
             <label class="customCheckBoxLabel">Welfare Fund member
-              <input type="checkbox" formControlName ="welfareFundMemberFlag"
-              (click)="selectCheckBox(check_box_type.WELFARE_FUND_MEMBER)" name="welfareFundMemberFlag" id="welfareFundMemberFlag">
+              <input type="checkbox" formControlName ="welfareFundMemberFlag" name="welfareFundMemberFlag" id="welfareFundMemberFlag">
               <span class="checkmark"></span>
             </label>
             <label class="customCheckBoxLabel">In Active
@@ -48,7 +46,7 @@
               (click)="selectCheckBox(check_box_type.IN_ACTIVE)" name="isInActiveMember" id="isInActiveMember">
               <span class="checkmark"></span>
             </label>
-            <select class="form-control" *ngIf="currentlyChecked === check_box_type.IN_ACTIVE"   formControlName="inActiveType" >
+            <select class="form-control" *ngIf="currentlyChecked === check_box_type.IN_ACTIVE" formControlName="inActiveType" >
               <option [value]="type" *ngFor="let type of inActiveTypes">{{type}}</option>
             </select>
           </form>
@@ -57,82 +55,82 @@
         <div class="col-sm-5">
             <div class="form-group">
                 <label for="rollNo">Roll No:</label>
-                <input type="rollNo" formControlName="rollNo" (keyup)="removeError('rollNo')" (keydown.Tab)="getRollNoDetails($event)" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo">
+                <input type="rollNo" autocomplete="off"  formControlName="rollNo" (keyup)="removeError('rollNo')" (keydown.Tab)="getRollNoDetails($event)" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo">
                 <label class="error-label" *ngIf="rollNullFlag">Roll Number cannot be blank</label>
               </div>
           
               <div class="form-group">
                 <label for="name">Name:</label>
-                <input formControlName="name" (keyup)="removeError('name')" placeholder="Name" name="name" class="form-control" id="name">
+                <input formControlName="name" autocomplete="off" (keyup)="removeError('name')" autocomplete="off" placeholder="Name" name="name" class="form-control" id="name">
                 <label class="error-label" *ngIf="nameNullFlag">Member Name cannot be blank</label>
               </div>
 
               <div class="form-group">
+                <label for="fatherName">Father Name:</label>
+                <input type="fatherName" autocomplete="off" formControlName="fatherName" autocomplete="off" placeholder="Father Name" name="fatherName" class="form-control" id="fatherName">
+              </div>
+
+              <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input formControlName="dob" autocomplete="off" id="dob" type="text" autocomplete="off" placeholder="Date of Birth" class="form-control"
+                bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+              </div>
+
+              <div class="form-group">
+                <label for="bloodGroup">Blood Group:</label>
+                <input formControlName="bloodGroup" autocomplete="off" autocomplete="off" placeholder="Blood Group" name="bloodGroup" class="form-control" id="bloodGroup">
+              </div>
+
+              <div class="form-group">
                 <label for="doj">Date of Joining:</label>
-                <input formControlName="doj" id="doj" type="text" placeholder="Date of Joining" class="form-control"
+                <input formControlName="doj" autocomplete="off" id="doj" type="text" autocomplete="off" placeholder="Date of Joining" class="form-control"
                 bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
               </div>
           
               <div class="form-group">
                 <label for="mobileNumber">Mobile Number:</label>
-                <input formControlName="mobileNumber" placeholder="Mobile Number" name="mobileNumber" class="form-control" id="mobileNumber">
+                <input formControlName="mobileNumber" autocomplete="off" autocomplete="off" placeholder="Mobile Number" name="mobileNumber" class="form-control" id="mobileNumber">
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input formControlName="email" autocomplete="off" autocomplete="off" placeholder="Email" name="email" class="form-control" id="email">
               </div>
 
               <div class="form-group">
                 <label for="homeAddress">Home Address:</label>
-                <input formControlName="homeAddress" placeholder="Home Address" name="homeAddress" class="form-control" id="homeAddress">
-              </div>
-
-              <div class="form-group">
-                <label for="dob">Date of Birth:</label>
-                <input formControlName="dob" id="dob" type="text" placeholder="Date of Birth" class="form-control"
-                bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+                <input formControlName="homeAddress" autocomplete="off" autocomplete="off" placeholder="Home Address" name="homeAddress" class="form-control" id="homeAddress">
               </div>
 
               <div class="form-group">
                 <label for="officeAddress">Office Address: </label>
-                <input formControlName="officeAddress" placeholder="Office Address" name="officeAddress" class="form-control" id="officeAddress">
-              </div>
-
-              <div class="form-group">
-                <label for="advocateName">Advocate Name:</label>
-                <input formControlName="advocateName" placeholder="Advocate Name" name="advocateName" class="form-control" id="advocateName">
+                <input formControlName="officeAddress" autocomplete="off" autocomplete="off" placeholder="Office Address" name="officeAddress" class="form-control" id="officeAddress">
               </div>
         </div>
         <div class="col-sm-5">
-            <div class="form-group">
-                <label for="fatherName">Father Name:</label>
-                <input type="fatherName" formControlName="fatherName" placeholder="Father Name" name="fatherName" class="form-control" id="fatherName">
-              </div>
-          
               <div class="form-group">
-                <label for="email">Email:</label>
-                <input formControlName="email" placeholder="Email" name="email" class="form-control" id="email">
-              </div>
-          
-              <div class="form-group">
-                <label for="bloodGroup">Blood Group:</label>
-                <input formControlName="bloodGroup" placeholder="Blood Group" name="bloodGroup" class="form-control" id="bloodGroup">
+                <label for="advocateName">Advocate Name:</label>
+                <input formControlName="advocateName" autocomplete="off" autocomplete="off" placeholder="Advocate Name" name="advocateName" class="form-control" id="advocateName">
               </div>
 
               <div class="form-group">
                 <label for="advocateHomeAddress">Advocate Home Address: </label>
-                <input formControlName="advocateHomeAddress" placeholder="Advocate Home Address" name="advocateHomeAddress" class="form-control" id="advocateHomeAddress">
+                <input formControlName="advocateHomeAddress" autocomplete="off" autocomplete="off" placeholder="Advocate Home Address" name="advocateHomeAddress" class="form-control" id="advocateHomeAddress">
               </div>
 
               <div class="form-group">
                 <label for="advocateOfficeAddress">Advocate Office Address: </label>
-                <input formControlName="advocateOfficeAddress" placeholder="Advocate Office Address" name="advocateOfficeAddress" class="form-control" id="advocateOfficeAddress">
+                <input formControlName="advocateOfficeAddress" autocomplete="off" autocomplete="off" placeholder="Advocate Office Address" name="advocateOfficeAddress" class="form-control" id="advocateOfficeAddress">
               </div>
 
               <div class="form-group">
                 <label for="advocateMobileNumber">Advocate Mobile Number:</label>
-                <input formControlName="advocateMobileNumber" placeholder="Advocate Mobile Number" name="advocateMobileNumber" class="form-control" id="advocateMobileNumber">
+                <input formControlName="advocateMobileNumber" autocomplete="off" autocomplete="off" placeholder="Advocate Mobile Number" name="advocateMobileNumber" class="form-control" id="advocateMobileNumber">
               </div>
 
               <div class="form-group">
                 <label for="advocateEmail">Advocate Email:</label>
-                <input formControlName="advocateEmail" placeholder="Advocate Email" name="advocateEmail" class="form-control" id="advocateEmail">
+                <input formControlName="advocateEmail" autocomplete="off" autocomplete="off" placeholder="Advocate Email" name="advocateEmail" class="form-control" id="advocateEmail">
               </div>
               
               <div *ngIf="!editFlag" class="add-clear-btn-div">

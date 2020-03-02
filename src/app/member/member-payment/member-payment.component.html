@@ -31,12 +31,12 @@
       <form [formGroup]="paymentForm">
         <div class="form-group">
           <label for="rollNo">Roll No:</label>
-          <input type="rollNo" formControlName="rollNo" placeholder="Roll No" name="rollNo" class="form-control"
+          <input type="rollNo" formControlName="rollNo" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control"
             id="rollNo" (keydown.Tab)="getRollNoDetails()">
         </div>
         <div class="form-group">
           <label for="name">Member Name:</label>
-          <input type="name" [(ngModel)] = "memberName" formControlName="name" placeholder="Member Name" name="name" class="form-control"
+          <input type="name" [(ngModel)] = "memberName" formControlName="name" autocomplete="off" placeholder="Member Name" name="name" class="form-control"
             id="name">
         </div>
         <div class="form-group">
@@ -55,7 +55,7 @@
         </div>
         <div class="form-group">
           <label for="amount">Membership Amount:</label>
-          <input type="amount" formControlName="amount" placeholder="Membership Amount" name="amount"
+          <input type="amount" formControlName="amount" autocomplete="off" placeholder="Membership Amount" name="amount"
             class="form-control" id="amount">
         </div>
 

@@ -3,6 +3,7 @@ import { UserService } from "../../service/user.service";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { Router, NavigationExtras } from "@angular/router";
 import { Data } from '../../model/data.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-member-report',
@@ -15,11 +16,12 @@ export class MemberReportComponent implements OnInit {
     { 'title': "Select Report", 'id': 0},
     { 'title': "Current Year Paid List", 'id': 1 },
     { 'title': "Year Wise", 'id': 2 },
-    { 'title': "Membership By Roll No", 'id': 3 },
+    { 'title': "Subscription By Roll No", 'id': 3 },
     { 'title': "Active Members", 'id': 4 },
     { 'title': "In-Active Members", 'id': 5 },
     { 'title': "Welfare Fund Members", 'id': 6 },
     { 'title': "Life Time Members", 'id': 7 },
+    { 'title': "Date Range", 'id': 8 }
   ];
    
   public selectedReportType: any;
@@ -38,10 +40,15 @@ export class MemberReportComponent implements OnInit {
   public totalRecords: any;
   public totalAmount: any;
 
+  public enteredFromDate;
+  public enteredToDate;
+  public searchByDateRange: boolean = false;
+
   constructor(private userService: UserService,
     public modalService: BsModalService,
     private router: Router,
-    public data: Data) { }
+    public data: Data,
+    public datepipe: DatePipe) { }
 
   ngOnInit() {
     this.enteredYear = this.currentDate.getFullYear();
@@ -60,12 +67,19 @@ export class MemberReportComponent implements OnInit {
     if(this.selectedReportType == 2){
       this.reportByYearFlag = true;
       this.reportByRollNoFlag = false;
+      this.searchByDateRange = false;
     }else if(this.selectedReportType == 3){
       this.reportByYearFlag = false;
       this.reportByRollNoFlag = true;
+      this.searchByDateRange = false;
+    }else if(this.selectedReportType == 8){
+      this.reportByYearFlag = false;
+      this.reportByRollNoFlag = false;
+      this.searchByDateRange = true;
     }else{
       this.reportByYearFlag = false;
       this.reportByRollNoFlag = false;
+      this.searchByDateRange = false;
     }
   }
 
@@ -146,6 +160,23 @@ export class MemberReportComponent implements OnInit {
         if(response.data.length == 0)this.nullResponseFlag = true;
         this.memberDetailsResponse = response.data;
         this.billingDetailsResponse = [];
+      });
+    }else if(this.selectedReportType == 8){
+      this.userService.getMemberPayment("reportFlag=2&statusFlag=2&fromDate="+this.datepipe.transform(this.enteredFromDate, 'yyyy-MM-dd')+"&toDate="+this.datepipe.transform(this.enteredToDate, 'yyyy-MM-dd')).subscribe((response: any) => {
+        if(response.data.length == 0){
+          this.showAmountAndCount = false;
+          this.nullResponseFlag = true;
+        }else{
+          let totalAmountCalc = 0;
+          for (let i = 0; i < response.data.length; i++) {
+            totalAmountCalc = totalAmountCalc+ (+response.data[i].amount);
+          }
+          this.totalRecords = response.data.length;
+          this.totalAmount = totalAmountCalc;
+          this.showAmountAndCount = true;
+        }
+        this.billingDetailsResponse = response.data;
+        this.memberDetailsResponse = [];
       });
     }
   }
