@@ -30,13 +30,14 @@
           
         <div class="form-group">
           <label for="advName">Advocate Name:</label>
-          <input formControlName="advName" autocomplete="off" autocomplete="off" placeholder="Advocate Name" name="advName" class="form-control" id="advName">
+          <input [ngClass]="{'inputErrorBorder' : advNameNullFlag}"  formControlName="advName" autocomplete="off" autocomplete="off" placeholder="Advocate Name" name="advName" class="form-control" id="advName">
+          <label class="error-label" *ngIf="advNameNullFlag">Advocate Name cannot be blank</label>
         </div>
 
         <div class="form-group">
           <label for="amount">Amount:</label>
-          <input formControlName="amount" autocomplete="off" placeholder="Amount" name="amount" class="form-control"
-            id="amount">
+          <input [ngClass]="{'inputErrorBorder' : amountNullFlag}"  type="number" formControlName="amount" autocomplete="off" placeholder="Amount" name="amount" class="form-control" id="amount">
+          <label class="error-label" *ngIf="amountNullFlag">Amount cannot be blank</label>
         </div>
 
         <div class="form-group">

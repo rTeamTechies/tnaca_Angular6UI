@@ -38,16 +38,16 @@
         </select>  
       </div>
       <div class="padding-left-15" *ngIf = "searchByRollNo">
-        <input type="text" [(ngModel)]="enteredRollNo" name="rollNo" autocomplete="off" placeholder="Roll Number" id="rollNo" required autocomplete="off" />        
+        <input [ngClass]="{'inputErrorBorder' : rollNoNullFlag}"  type="text" [(ngModel)]="enteredRollNo" name="rollNo" autocomplete="off" placeholder="Roll Number" id="rollNo" required autocomplete="off" />        
       </div>
 
       <div class="padding-left-15" *ngIf = "searchByDateRange">
-        <input [(ngModel)]="enteredFromDate"  id="enteredFromDate" type="text" autocomplete="off" placeholder="Start Date"
+        <input [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}"  [(ngModel)]="enteredFromDate"  id="enteredFromDate" type="text" autocomplete="off" placeholder="Start Date"
         bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
       </div>
 
       <div class="padding-left-15" *ngIf = "searchByDateRange">
-        <input [(ngModel)]="enteredToDate" id="enteredToDate" type="text" autocomplete="off" placeholder="End Date"
+        <input [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}"  [(ngModel)]="enteredToDate" id="enteredToDate" type="text" autocomplete="off" placeholder="End Date"
         bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
       </div>
 
@@ -59,6 +59,35 @@
 
     </div>
   </div> 
+
+  <div class="row m-0 padding-top-15" *ngIf="rollNoNullFlag">
+    <div class="col-sm-12">
+      <label class="error-label">Roll Number cannot be blank</label>
+    </div>
+  </div>
+
+  <div class="row m-0 padding-top-15" *ngIf="dateRangeNullFlag">
+    <div class="col-sm-12">
+      <label class="error-label">Start Date & End Date cannot be blank</label>
+    </div>
+  </div>
+
+  <div class="row m-0 padding-top-15 text-center" *ngIf="nullResponseFlag">
+    <div class="col-sm-12">
+        <img src="./assets/images/NoRecords.png"/>
+      </div>
+  </div>
+
+  <div class="row m-0 padding-top-15" *ngIf="showAmountAndCount">
+    <div class="col-sm-6">
+        <h3>Record Count: {{totalRecords}}</h3>
+    </div>
+    <div class="col-sm-6 text-right">
+        <h3>Total Amount: {{totalAmount}}</h3>
+    </div>
+  </div>
+
+  
 
   <div class="row m-0 padding-top-15">
     <div class="col-sm-12">

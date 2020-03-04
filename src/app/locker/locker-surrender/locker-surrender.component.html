@@ -31,8 +31,9 @@
       <form [formGroup]="surrenderMemberLocker">
         <div class="form-group">
           <label for="billNo">Receipt No:</label>
-          <input formControlName="billNo" style="width:15%" autocomplete="off" placeholder="Receipt No" name="billNo" class="form-control"
+          <input  [ngClass]="{'inputErrorBorder' : billNoNullFlag}" formControlName="billNo" style="width:15%" autocomplete="off" placeholder="Receipt No" name="billNo" class="form-control"
             id="billNo">
+          <label class="error-label" *ngIf="billNoNullFlag">Receipt Number cannot be blank</label>
         </div>
        
         <div class="add-clear-btn-div">

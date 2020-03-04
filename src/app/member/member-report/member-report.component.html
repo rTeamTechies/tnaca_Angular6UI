@@ -28,61 +28,76 @@
 <div id="memberReportDiv" class="member-section height-100">
 
   <div class="row m-0 padding-top-15">
-    <div id="report-input" class="col-sm-8 text-right pad-top-10"  style="display:flex; flex-direction: row; justify-content: left; align-items: baseline"> 
+    <div id="report-input" class="col-sm-8 text-right pad-top-10"
+      style="display:flex; flex-direction: row; justify-content: left; align-items: baseline">
       <div>
-        <label>Report</label>  
+        <label>Report</label>
       </div>
       <div class="padding-left-15">
-        <select class="form-control" [(ngModel)]="selectedReportType" (ngModelChange) ="showHideInputs()">
+        <select class="form-control" [(ngModel)]="selectedReportType" (ngModelChange)="showHideInputs()">
           <option [ngValue]="type.id" *ngFor="let type of reportTypes">{{type.title}}</option>
-        </select>  
+        </select>
       </div>
-      <div class="padding-left-15" *ngIf ="reportByRollNoFlag">
-        <input type="text" [(ngModel)]="enteredRollNo" name="rollNo" autocomplete="off" placeholder="Roll Number" class="question" id="rollNo" required autocomplete="off" />        
+      <div class="padding-left-15" *ngIf="reportByRollNoFlag">
+        <input type="text" [ngClass]="{'inputErrorBorder' : rollNoNullFlag}" [(ngModel)]="enteredRollNo" name="rollNo" autocomplete="off" placeholder="Roll Number"
+          class="question" id="rollNo" required autocomplete="off" />
       </div>
-      <div class="padding-left-15" *ngIf ="reportByYearFlag">
-        <select class="form-control width-100" [(ngModel)]="enteredYear" >
+      <div class="padding-left-15" *ngIf="reportByYearFlag">
+        <select class="form-control width-100" [(ngModel)]="enteredYear">
           <option [value]="type" *ngFor="let type of year">{{type}}</option>
-        </select>     
+        </select>
       </div>
-      <div class="padding-left-15" *ngIf = "searchByDateRange">
-        <input [(ngModel)]="enteredFromDate"  id="enteredFromDate" type="text" autocomplete="off" placeholder="Start Date"
-        bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+      <div class="padding-left-15" *ngIf="searchByDateRange">
+        <input [(ngModel)]="enteredFromDate" [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}" id="enteredFromDate" type="text" autocomplete="off"
+          placeholder="Start Date" bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
       </div>
 
-      <div class="padding-left-15" *ngIf = "searchByDateRange">
-        <input [(ngModel)]="enteredToDate" id="enteredToDate" type="text" autocomplete="off" placeholder="End Date"
-        bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+      <div class="padding-left-15" *ngIf="searchByDateRange">
+        <input [(ngModel)]="enteredToDate" [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}" id="enteredToDate" type="text" autocomplete="off" placeholder="End Date"
+          bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
       </div>
       <div class="padding-left-15">
         <button class="btn btn-success no-print" (click)="generateReport()">Generate</button>
       </div>
     </div>
-    <div  class="col-sm-4 text-right no-print">
-      <a tooltip="Print Page" placement="bottom" (click)="printPage();"><span
-        class="glyphicon glyphicon-print"  style="font-size: 25px;"></span></a>
+    <div class="col-sm-4 text-right no-print">
+      <a tooltip="Print Page" placement="bottom" (click)="printPage();"><span class="glyphicon glyphicon-print"
+          style="font-size: 25px;"></span></a>
     </div>
   </div>
 
+  <div class="row m-0 padding-top-15" *ngIf="rollNoNullFlag">
+    <div class="col-sm-12">
+      <label class="error-label">Roll Number cannot be blank</label>
+    </div>
+  </div>
+
+  <div class="row m-0 padding-top-15" *ngIf="dateRangeNullFlag">
+    <div class="col-sm-12">
+      <label class="error-label">Start Date & End Date cannot be blank</label>
+    </div>
+  </div>
+
+
   <div class="row m-0 padding-top-15 text-center" *ngIf="nullResponseFlag">
     <div class="col-sm-12">
-        <img src="./assets/images/NoRecords.png"/>
-      </div>
+      <img src="./assets/images/NoRecords.png" />
+    </div>
   </div>
 
   <div class="row m-0 padding-top-15" *ngIf="showAmountAndCount">
     <div class="col-sm-6">
-        <h3>Record Count: {{totalRecords}}</h3>
+      <h3>Record Count: {{totalRecords}}</h3>
     </div>
     <div class="col-sm-6 text-right">
-        <h3>Total Amount: {{totalAmount}}</h3>
+      <h3>Total Amount: {{totalAmount}}</h3>
     </div>
   </div>
 
   <div class="row m-0 padding-top-15">
     <div class="col-sm-12">
       <!-- Billing Details Table-->
-      <table id="member-billing-datatable" class="table table-bordered table-hover table-responsive"
+      <table id="member-report-datatable-1" class="table table-bordered table-hover table-responsive"
         [mfData]="billingDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="25"
         *ngIf="billingDetailsResponse.length > 0">
         <thead>
@@ -134,7 +149,7 @@
   <div class="row m-0 padding-top-15">
     <div class="col-sm-12">
       <!-- Member Details Table-->
-      <table id="member-billing-datatable" class="table table-bordered table-hover table-responsive"
+      <table id="member-report-datatable-2" class="table table-bordered table-hover table-responsive"
         [mfData]="memberDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="25" *ngIf="memberDetailsResponse.length > 0">
         <thead>
           <tr>
@@ -156,9 +171,9 @@
             <th class="no-print">
               <mfDefaultSorter by="advocate_name">Advocate Name</mfDefaultSorter>
             </th>
-            <th >
+            <th>
               <mfDefaultSorter by="home_address">Address</mfDefaultSorter>
-            </th >
+            </th>
             <!-- <th class="no-print">
               Action
             </th> -->

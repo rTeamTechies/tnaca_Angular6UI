@@ -48,11 +48,13 @@ export class MemberListComponent implements OnInit{
 
   filter(term: string) {
     if(!term) {
-      this.responseData = this.responseData;
+      this.responseData = this.filteredData;
+      this.memberCount = this.filteredData.length;
     } else {
       this.responseData = this.filteredData.filter(x => 
          x.name.trim().toLowerCase().includes(term.trim().toLowerCase())
       );
+      this.memberCount = this.responseData.length;
     }
   }
 

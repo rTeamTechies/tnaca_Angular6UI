@@ -22,6 +22,10 @@ export class JudgeCostAddEditComponent implements OnInit {
   public b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
   public n : any;
 
+  public judgeNameNullFlag: boolean = false;
+  public caseNoNullFlag: boolean = false;
+  public amountNullFlag: boolean = false;
+
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
@@ -36,12 +40,13 @@ export class JudgeCostAddEditComponent implements OnInit {
       judgeName: ['', Validators.required],
       caseNo: ['', Validators.required],
       amount: ['', Validators.required],
-      paymentType: ['Cash']
+      paymentType: ['CASH']
     });
   }
 
   onSubmit() {
-    this.userService.addJudgeCost(this.addJudgeCostForm.value)
+    if(this.mandatoryValidationsPass()){
+      this.userService.addJudgeCost(this.addJudgeCostForm.value)
       .subscribe((data: any) => {
         if (data.status == "Success") {
 
@@ -54,13 +59,21 @@ export class JudgeCostAddEditComponent implements OnInit {
           this.toastr.error("Error", "Something went wrong. Try again later..!")
         }
       });
+    }
   }
 
   clearForm() {
     this.addJudgeCostForm.reset();
     this.addJudgeCostForm.controls.billDate.patchValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+    this.addJudgeCostForm.controls.paymentType.patchValue('CASH');
+    this.clearErrors();
   }
 
+  clearErrors(){
+    this.judgeNameNullFlag = false;
+    this.caseNoNullFlag = false;
+    this.amountNullFlag = false;
+  }
 
   printAndClearForm(data) {
     window.print();
@@ -79,6 +92,22 @@ inWords (num) {
   str += (this.n[4] != 0) ? (this.a[Number(this.n[4])] || this.b[this.n[4][0]] + ' ' + this.a[this.n[4][1]]) + 'hundred ' : '';
   str += (this.n[5] != 0) ? ((str != '') ? 'and ' : '') + (this.a[Number(this.n[5])] || this.b[this.n[5][0]] + ' ' + this.a[this.n[5][1]]) + 'only ' : '';
   return str;
+}
+
+mandatoryValidationsPass(){
+  this.clearErrors();
+  let success = true;
+  if(this.addJudgeCostForm.value.judgeName == null || this.addJudgeCostForm.value.judgeName.trim() == ""){
+    this.judgeNameNullFlag = true;
+    success = false;  
+  }else if(this.addJudgeCostForm.value.caseNo == null || this.addJudgeCostForm.value.caseNo.trim() == ""){
+    this.caseNoNullFlag = true;
+    success = false;
+  }else  if(this.addJudgeCostForm.value.amount == null || this.addJudgeCostForm.value.amount.trim() == ""){
+    this.amountNullFlag = true;
+    success = false;
+  }
+  return success;
 }
 
 }

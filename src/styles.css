@@ -108,3 +108,13 @@ body {
     display: none;
   }
 }
+
+.inputErrorBorder {
+    border: 1px solid red !important;
+  }  
+
+  input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

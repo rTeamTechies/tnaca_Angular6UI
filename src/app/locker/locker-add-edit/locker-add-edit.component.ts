@@ -28,6 +28,7 @@ export class LockerAddEditComponent implements OnInit {
   public lockerIdNullFlag: boolean = false;
   public lockerUnavailableFlag: boolean = false;
   public amountNullFlag: boolean = false;
+  public disableSubmitNoMember:boolean = true;
 
 
   public a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
@@ -49,6 +50,7 @@ export class LockerAddEditComponent implements OnInit {
 
   ngOnInit() {
     if(this.fromListingPage){
+      this.disableSubmitNoMember = false;
       this.addMemberLocker = this.formBuilder.group({      
         billNo: ['', Validators.required],
         rollNo: [this.data.memberDataTransfer.roll_no, Validators.required],
@@ -66,7 +68,7 @@ export class LockerAddEditComponent implements OnInit {
           this.memberLockertHistoryres = response.data;
         });
 
-    }else{
+    }else{      
       this.addMemberLocker = this.formBuilder.group({      
         billNo: ['', Validators.required],
         rollNo: ['', Validators.required],
@@ -103,23 +105,28 @@ export class LockerAddEditComponent implements OnInit {
   }
 
   getRollNoDetails() {
+    this.removeErrorFlagOnChange();
     this.userService.getMemberByRollNo(this.addMemberLocker.value.rollNo)
       .subscribe((response: any) => {
         if (response.data.length > 0) {
+          this.disableSubmitNoMember = false;
           this.memberName = response.data[0].name;
           this.userService.getMemberPayment("reportFlag=3&lockerFlag=1&rollNo=" + response.data[0].roll_no)
             .subscribe((response: any) => {
               this.memberLockertHistoryres = response.data;
             });
         }else{
+          this.disableSubmitNoMember = true;
           this.memberLockertHistoryres = [];
           this.memberName = "";
+          this.toastr.error("Error", "Entered Roll No not Exists.")
         }
       });
   }
 
   clearForm(){
     this.addMemberLocker.reset();
+    this.addMemberLocker.controls.lockerFlag.patchValue(1);
     this.memberLockertHistoryres = [];
   }
 

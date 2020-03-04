@@ -6,6 +6,7 @@ import { AuthenticationService } from "../../service/auth.service";
 import { UserService } from "../../service/user.service";
 import { ToastrService } from 'ngx-toastr';
 import { Data } from '../../model/data.model';
+import { e } from '@angular/core/src/render3';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { Data } from '../../model/data.model';
 export class LockerSurrenderComponent implements OnInit {
 
   public surrenderMemberLocker: FormGroup;
+  public billNoNullFlag: boolean = false;
 
   constructor(private formBuilder: FormBuilder, 
     private router: Router, 
@@ -33,14 +35,19 @@ export class LockerSurrenderComponent implements OnInit {
   }
 
   onSubmit() {
-    this.userService.surrenderLocker(this.surrenderMemberLocker.controls.billNo.value)
-    .subscribe((data : any) => {
-      this.clearForm();
-      this.toastr.success("Locker Surrendered Successfully");
-    });
+    if(this.surrenderMemberLocker.controls.billNo.value == null || this.surrenderMemberLocker.controls.billNo.value.trim() == ""){
+      this.billNoNullFlag = true;
+    }else{
+      this.userService.surrenderLocker(this.surrenderMemberLocker.controls.billNo.value)
+      .subscribe((data : any) => {
+        this.clearForm();
+        this.toastr.success("Locker Surrendered Successfully");
+      });
+    }
   }
 
   clearForm(){
+    this.billNoNullFlag = false;
     this.surrenderMemberLocker.reset();
   }
 

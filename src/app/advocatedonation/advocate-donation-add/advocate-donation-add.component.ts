@@ -22,6 +22,9 @@ export class AdvocateDonationAddComponent implements OnInit {
   public b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
   public n : any;
 
+  public advNameNullFlag: boolean = false;
+  public amountNullFlag: boolean = false;
+
   constructor(private formBuilder: FormBuilder, 
     private router: Router,
     private userService: UserService,
@@ -39,23 +42,32 @@ export class AdvocateDonationAddComponent implements OnInit {
   }
 
   onSubmit(){
-    this.userService.addAdvDonation(this.addAdvDonationForm.value)
-    .subscribe((data : any) => {
-      if(data.status == "Success"){
-        this.generatedBillNo = data.billNo;
-        this.amountInWords = this.inWords(this.addAdvDonationForm.value.amount);
-        setTimeout(() => this.printAndClearForm(data), 350);
-      }else if(data.status == "Failure"){
-        this.toastr.error(data.message)
-      }else{
-        this.toastr.error("Error", "Something went wrong. Try again later..!")
-      }
-    });
+    if(this.mandatoryValidationsPass()){
+      this.userService.addAdvDonation(this.addAdvDonationForm.value)
+      .subscribe((data : any) => {
+        if(data.status == "Success"){
+          this.generatedBillNo = data.billNo;
+          this.amountInWords = this.inWords(this.addAdvDonationForm.value.amount);
+          setTimeout(() => this.printAndClearForm(data), 350);
+        }else if(data.status == "Failure"){
+          this.toastr.error(data.message)
+        }else{
+          this.toastr.error("Error", "Something went wrong. Try again later..!")
+        }
+      });
+    }
   }
 
   clearForm() {
+    this.clearErrors();
     this.addAdvDonationForm.reset();
     this.addAdvDonationForm.controls.billDate.patchValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+    this.addAdvDonationForm.controls.paymentType.patchValue('CASH');
+  }
+
+  clearErrors(){
+    this.advNameNullFlag = false;
+    this.amountNullFlag = false;
   }
 
 
@@ -76,6 +88,19 @@ inWords (num) {
   str += (this.n[4] != 0) ? (this.a[Number(this.n[4])] || this.b[this.n[4][0]] + ' ' + this.a[this.n[4][1]]) + 'hundred ' : '';
   str += (this.n[5] != 0) ? ((str != '') ? 'and ' : '') + (this.a[Number(this.n[5])] || this.b[this.n[5][0]] + ' ' + this.a[this.n[5][1]]) + 'only ' : '';
   return str;
+}
+
+mandatoryValidationsPass(){
+  this.clearErrors();
+  let success = true;
+  if(this.addAdvDonationForm.value.advName == null || this.addAdvDonationForm.value.advName.trim() == ""){
+    this.advNameNullFlag = true;
+    success = false;  
+  }else  if(this.addAdvDonationForm.value.amount == null || this.addAdvDonationForm.value.amount.trim() == ""){
+    this.amountNullFlag = true;
+    success = false;
+  }
+  return success;
 }
 
 }

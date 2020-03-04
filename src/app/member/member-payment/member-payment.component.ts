@@ -29,6 +29,8 @@ export class MemberPaymentComponent implements OnInit {
   public amountInWords: string;
   public check : boolean =false;
   public modalRef: BsModalRef;
+
+  public disableSubmitFlag: boolean = true;
   
   public a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
   public b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
@@ -47,14 +49,19 @@ export class MemberPaymentComponent implements OnInit {
       }
     }
 
+    public rollNullFlag: boolean = false;
+    public memberNameNullFlag: boolean = false;
+    public amountNullFlag: boolean = false;
+
   ngOnInit() {
     this.loading = true;
     this.currentYear = this.currenDate.getFullYear();
     for(var i=0 ; i < 31; i++){
-      this.subscriptionYear.push(this.currentYear+i);
+      this.subscriptionYear.push(2000+i);
     }
 
     if(this.fromListingPage){
+      this.disableSubmitFlag = false;
       this.memberName = this.data.memberDataTransfer.name;
       this.userService.getMemberPayment("reportFlag=5&membershipFlag=1&rollNo="+this.data.memberDataTransfer.roll_no)
         .subscribe((response : any) => {
@@ -93,12 +100,15 @@ export class MemberPaymentComponent implements OnInit {
     this.userService.getMemberByRollNo(this.paymentForm.value.rollNo)
       .subscribe((response: any) => {
         if (response.data.length > 0) {
+          this.disableSubmitFlag = false;
           this.memberName = response.data[0].name;
           this.userService.getMemberPayment("reportFlag=5&membershipFlag=1&rollNo=" + response.data[0].roll_no)
             .subscribe((response: any) => {
               this.paymentHistoryres = response.data;
             });
         }else{
+          this.toastr.error("Error", "Entered Roll No not Exists.")
+          this.disableSubmitFlag = true;
           this.paymentHistoryres = [];
           this.memberName = "";
         }
@@ -106,10 +116,38 @@ export class MemberPaymentComponent implements OnInit {
   }
 
   confirmPayment(template: TemplateRef<any>){
-    this.modalRef = this.modalService.show(template, {
-      animated: true,
-      backdrop: 'static'
-    }); 
+    if(this.checkMandatoryFields()){
+      this.modalRef = this.modalService.show(template, {
+        animated: true,
+        backdrop: 'static'
+      }); 
+    }
+  }
+
+  checkMandatoryFields(){
+    let successFlag = true;
+    this.rollNullFlag = false;
+    this.memberNameNullFlag = false;
+    this.amountNullFlag = false;
+    if (this.paymentForm.value.rollNo.toString().trim() == "") {
+      this.rollNullFlag = true;
+      successFlag = false;
+      this.loading = false;
+    }
+
+    if (this.paymentForm.value.name.trim() == "") {
+      this.memberNameNullFlag = true;
+      successFlag = false;
+      this.loading = false;
+    }
+
+    if (this.paymentForm.value.amount.trim() == "") {
+      this.amountNullFlag = true;
+      successFlag = false;
+      this.loading = false;
+    }
+
+    return successFlag;
   }
 
   callPayment(){
@@ -134,12 +172,11 @@ export class MemberPaymentComponent implements OnInit {
     this.paymentForm.controls.membershipFlag.patchValue(1);
     this.paymentForm.controls.fromDate.patchValue(this.subscriptionYear + "-01-01");
     this.paymentForm.controls.toDate.patchValue(this.subscriptionYear + "-12-31");
-
     this.paymentForm.controls.subscriptionType.patchValue("YEARLY");
     this.paymentForm.controls.subscriptionYear.patchValue(this.currenDate.getFullYear());
-    this.paymentForm.controls.paymentType.patchValue("Cash");
-
+    this.paymentForm.controls.paymentType.patchValue("CASH");
     this.paymentHistoryres = [];
+    this.disableSubmitFlag = true;
     
   }
 

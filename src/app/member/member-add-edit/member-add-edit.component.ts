@@ -29,6 +29,7 @@ export class MemberAddEditComponent implements OnInit {
   check_box_type = CheckBoxType;
   currentlyChecked: CheckBoxType;
   public modalRef: BsModalRef;
+  public rollNoExistFlag: boolean = false;
 
   constructor(private formBuilder: FormBuilder, 
     private router: Router, 
@@ -192,6 +193,7 @@ export class MemberAddEditComponent implements OnInit {
     this.userService.getMemberByRollNo(this.addForm.value.rollNo)
       .subscribe((response: any) => {
         if (response.data.length > 0) {
+          this.rollNoExistFlag = true;
           this.flagForm = this.formBuilder.group({  
             welfareFundMemberFlag : [response.data[0].welfare_fund_member === 1 ? true : false],
             lifeTimeMemberFlag: [response.data[0].lifetime_member_flag === 1 ? true : false],
@@ -222,6 +224,7 @@ export class MemberAddEditComponent implements OnInit {
           });
           this.toastr.error("Error", "Roll No Already Exist.")
         }else{
+          this.rollNoExistFlag = false;
           const enteredRollNo = this.addForm.controls.rollNo.value;
           this.addForm.reset();
           this.addForm.controls.rollNo.patchValue(enteredRollNo);
