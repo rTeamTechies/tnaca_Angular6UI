@@ -47,6 +47,8 @@ export class MemberReportComponent implements OnInit {
   public rollNoNullFlag:boolean = false;
   public dateRangeNullFlag:boolean = false;
 
+  public loading = false;
+
   constructor(private userService: UserService,
     public modalService: BsModalService,
     private router: Router,
@@ -94,17 +96,20 @@ export class MemberReportComponent implements OnInit {
     if ((this.enteredRollNo == undefined || this.enteredRollNo == "")&& this.selectedReportType == 3) {
       this.rollNoNullFlag = true;
       successFlag = false;
+      this.loading = false;
     }
 
     if (((this.enteredFromDate == undefined || this.enteredFromDate == "") || (this.enteredToDate == undefined || this.enteredToDate == "")) && this.selectedReportType == 8) {
       this.dateRangeNullFlag = true;
       successFlag = false;
+      this.loading = false;
     }
 
     return successFlag;
   }
 
   generateReport() {
+    this.loading = true;
     this.nullResponseFlag = false;
     this.billingDetailsResponse = [];    
     if(this.checkMandatoryFields()){
@@ -113,6 +118,7 @@ export class MemberReportComponent implements OnInit {
           if(response.data.length == 0){
             this.showAmountAndCount = false;
             this.nullResponseFlag = true;
+            this.loading = false;
           }else{
             let totalAmountCalc = 0;
             for (let i = 0; i < response.data.length; i++) {
@@ -121,6 +127,7 @@ export class MemberReportComponent implements OnInit {
             this.totalRecords = response.data.length;
             this.totalAmount = totalAmountCalc;
             this.showAmountAndCount = true;
+            this.loading = false;
           }
           this.billingDetailsResponse = response.data;
           this.memberDetailsResponse = [];
@@ -130,6 +137,7 @@ export class MemberReportComponent implements OnInit {
           if(response.data.length == 0){
             this.showAmountAndCount = false;
             this.nullResponseFlag = true;
+            this.loading = false;
           }else{
             let totalAmountCalc = 0;
             for (let i = 0; i < response.data.length; i++) {
@@ -138,6 +146,7 @@ export class MemberReportComponent implements OnInit {
             this.totalRecords = response.data.length;
             this.totalAmount = totalAmountCalc;
             this.showAmountAndCount = true;
+            this.loading = false;
           }
           this.billingDetailsResponse = response.data;
           this.memberDetailsResponse = [];
@@ -147,6 +156,7 @@ export class MemberReportComponent implements OnInit {
           if(response.data.length == 0){
             this.showAmountAndCount = false;
             this.nullResponseFlag = true;
+            this.loading = false;
           }else{
             let totalAmountCalc = 0;
             for (let i = 0; i < response.data.length; i++) {
@@ -155,40 +165,59 @@ export class MemberReportComponent implements OnInit {
             this.totalRecords = response.data.length;
             this.totalAmount = totalAmountCalc;
             this.showAmountAndCount = true;
+            this.loading = false;
           }
           this.billingDetailsResponse = response.data;
           this.memberDetailsResponse = [];
         });
       } else if (this.selectedReportType == 4) {
         this.userService.getMember("resultFlag=0&activeFlag=1").subscribe((response: any) => {
-          if(response.data.length == 0)this.nullResponseFlag = true;
+          if(response.data.length == 0){
+            this.nullResponseFlag = true;
+            this.loading = false;
+          }
+          this.loading = false;
           this.memberDetailsResponse = response.data;
           this.billingDetailsResponse = [];
         });
       } else if (this.selectedReportType == 5) {
         this.userService.getMember("resultFlag=0&activeFlag=0").subscribe((response: any) => {
-          if(response.data.length == 0)this.nullResponseFlag = true;
+          if(response.data.length == 0){
+            this.nullResponseFlag = true;
+            this.loading = false;
+          }
           this.memberDetailsResponse = response.data;
           this.billingDetailsResponse = [];
+          this.loading = false;
         });
       } else if (this.selectedReportType == 6) {
         this.userService.getMember("resultFlag=1&welfareFundMemberFlag=1").subscribe((response: any) => {
-          if(response.data.length == 0)this.nullResponseFlag = true;
+          if(response.data.length == 0){
+            this.nullResponseFlag = true;
+            this.loading = false;
+          }
           this.memberDetailsResponse = response.data;
           this.billingDetailsResponse = [];
+          this.loading = false;
         });
       }else if (this.selectedReportType == 7) {
         this.userService.getMember("resultFlag=2&lifeTimeMemberFlag=1").subscribe((response: any) => {
-          if(response.data.length == 0)this.nullResponseFlag = true;
+          if(response.data.length == 0){
+            this.nullResponseFlag = true;
+            this.loading = false;
+          }
           this.memberDetailsResponse = response.data;
           this.billingDetailsResponse = [];
+          this.loading = false;
         });
       }else if(this.selectedReportType == 8){
         this.userService.getMemberPayment("reportFlag=2&statusFlag=2&fromDate="+this.datepipe.transform(this.enteredFromDate, 'yyyy-MM-dd')+"&toDate="+this.datepipe.transform(this.enteredToDate, 'yyyy-MM-dd')).subscribe((response: any) => {
           if(response.data.length == 0){
+            this.loading = false;
             this.showAmountAndCount = false;
             this.nullResponseFlag = true;
           }else{
+            this.loading = false;
             let totalAmountCalc = 0;
             for (let i = 0; i < response.data.length; i++) {
               totalAmountCalc = totalAmountCalc+ (+response.data[i].amount);

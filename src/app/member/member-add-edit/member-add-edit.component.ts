@@ -23,7 +23,7 @@ export class MemberAddEditComponent implements OnInit {
   public addForm: FormGroup;
   public flagForm: FormGroup;
   public memberRollNo: any;
-  public inActiveTypes: any = ['SELECT TYPE', 'REMOVED', 'PROMOTED AS ADVOCATE', 'DEMISE'];
+  public inActiveTypes: any = ['REMOVED', 'PROMOTED AS ADVOCATE', 'DEMISE', 'OTHERS'];
   public rollNullFlag: boolean = false;
   public nameNullFlag: boolean = false;
   check_box_type = CheckBoxType;
@@ -55,7 +55,7 @@ export class MemberAddEditComponent implements OnInit {
         welfareFundMemberFlag : [false],
         lifeTimeMemberFlag: [false],
         isInActiveMember: [false],
-        inActiveType : ['SELECT TYPE']
+        inActiveType : ['REMOVED']
       });
 
       this.addForm = this.formBuilder.group({     
@@ -84,12 +84,12 @@ export class MemberAddEditComponent implements OnInit {
       });
       setTimeout(() => this.updateCheckBoxes(), 350);
       this.loading = false;
-    }else{
+    }else{ 
       this.flagForm = this.formBuilder.group({  
         welfareFundMemberFlag : [false],
         lifeTimeMemberFlag: [false],
         isInActiveMember: [false],
-        inActiveType : ['SELECT TYPE']
+        inActiveType : ['REMOVED']
       });
       this.addForm = this.formBuilder.group({      
         rollNo: ['', Validators.required],
@@ -187,6 +187,8 @@ export class MemberAddEditComponent implements OnInit {
   clearForm(){
     this.addForm.reset();
     this.flagForm.reset();
+    this.flagForm.controls.inActiveType.patchValue('REMOVED');
+    this.currentlyChecked = 0;
   }
 
   getRollNoDetails() {

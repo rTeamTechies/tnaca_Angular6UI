@@ -32,7 +32,7 @@
 
         <div class="form-group">
           <label for="rollNo">Roll No:</label>
-          <input formControlName="rollNo" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo" (keydown.Tab)="getRollNoDetails()">
+          <input formControlName="rollNo" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo" (focusout)="getRollNoDetails()">
           <label class="error-label" *ngIf="rollNoNullFlag">Roll Number cannot be blank.</label>
         </div>
 
@@ -60,7 +60,7 @@
 
         <div class="form-group">
           <label for="lockerId">Locker Number:</label>
-          <input formControlName="lockerId" autocomplete="off" placeholder="Locker Number" name="lockerId" (keydown.Tab)="checkLockerAvailability()" class="form-control"
+          <input formControlName="lockerId" autocomplete="off" placeholder="Locker Number" name="lockerId" (focusout)="checkLockerAvailability()" class="form-control"
             id="lockerId">
           <label class="error-label" *ngIf="lockerIdNullFlag">Locker Number cannot be blank.</label>
           <label class="error-label" *ngIf="lockerUnavailableFlag">Entered Locker Number is already alloted.</label>
