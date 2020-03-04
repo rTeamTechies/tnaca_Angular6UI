@@ -52,7 +52,8 @@ export class MemberListComponent implements OnInit{
       this.memberCount = this.filteredData.length;
     } else {
       this.responseData = this.filteredData.filter(x => 
-         x.name.trim().toLowerCase().includes(term.trim().toLowerCase())
+         (x.name.trim().toLowerCase().includes(term.trim().toLowerCase()) || 
+         x.roll_no.toString().trim().includes(term.trim()))
       );
       this.memberCount = this.responseData.length;
     }

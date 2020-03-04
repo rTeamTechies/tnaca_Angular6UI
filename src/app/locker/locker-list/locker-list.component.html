@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <img src="./assets/images/logo.png" class="nav-logo">
-      <a class="nav-logo-name" href="/member-list">TACA</a>
+      <a class="nav-logo-name" href="/home">TNACA</a>
     </div>
     <ul class="nav navbar-nav">
       <li><a href="/member-list">Membership</a></li>
@@ -93,7 +93,7 @@
     <div class="col-sm-12">
       <!-- Billing Details Table-->
       <table id="member-billing-datatable" class="table table-bordered table-hover table-responsive"
-        [mfData]="billingDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="5"
+        [mfData]="billingDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="50"
         *ngIf="billingDetailsResponse.length > 0">
         <thead>
           <tr>
@@ -108,6 +108,9 @@
             </th>
             <th>
               <mfDefaultSorter by="name">Member name</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="locker_id">Locker Number</mfDefaultSorter>
             </th>
             <th>
               <mfDefaultSorter by="from_date">From Date</mfDefaultSorter>
@@ -126,6 +129,7 @@
             <td>{{item.bill_date | date}}</td>
             <td>{{item.roll_no}}</td>
             <td>{{item.name}}</td>
+            <td>{{item.locker_id}}</td>
             <td>{{item.from_date | date}}</td>
             <td>{{item.to_date | date}}</td>
             <td>{{item.amount}}</td>
@@ -134,7 +138,7 @@
         <tfoot>
           <tr>
             <td colspan="8">
-              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+              <mfBootstrapPaginator></mfBootstrapPaginator>
             </td>
           </tr>
         </tfoot>

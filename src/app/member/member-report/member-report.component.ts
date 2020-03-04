@@ -21,7 +21,7 @@ export class MemberReportComponent implements OnInit {
     { 'title': "In-Active Members", 'id': 5 },
     { 'title': "Welfare Fund Members", 'id': 6 },
     { 'title': "Life Time Members", 'id': 7 },
-    { 'title': "Date Range", 'id': 8 }
+    { 'title': "Bill Date Range", 'id': 8 }
   ];
    
   public selectedReportType: any;

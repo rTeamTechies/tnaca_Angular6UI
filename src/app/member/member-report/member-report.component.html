@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <img src="./assets/images/logo.png" class="nav-logo">
-      <a class="nav-logo-name" href="/member-list">TACA</a>
+      <a class="nav-logo-name" href="/home">TNACA</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="/member-list">Membership</a></li>
@@ -98,7 +98,7 @@
     <div class="col-sm-12">
       <!-- Billing Details Table-->
       <table id="member-report-datatable-1" class="table table-bordered table-hover table-responsive"
-        [mfData]="billingDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="25"
+        [mfData]="billingDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="50"
         *ngIf="billingDetailsResponse.length > 0">
         <thead>
           <tr>
@@ -138,7 +138,7 @@
         <tfoot>
           <tr>
             <td colspan="8">
-              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+              <mfBootstrapPaginator></mfBootstrapPaginator>
             </td>
           </tr>
         </tfoot>
@@ -150,7 +150,7 @@
     <div class="col-sm-12">
       <!-- Member Details Table-->
       <table id="member-report-datatable-2" class="table table-bordered table-hover table-responsive"
-        [mfData]="memberDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="25" *ngIf="memberDetailsResponse.length > 0">
+        [mfData]="memberDetailsResponse" #mf="mfDataTable" [mfRowsOnPage]="50" *ngIf="memberDetailsResponse.length > 0">
         <thead>
           <tr>
             <th>
@@ -197,7 +197,7 @@
         <tfoot>
           <tr>
             <td colspan="8">
-              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+              <mfBootstrapPaginator></mfBootstrapPaginator>
             </td>
           </tr>
         </tfoot>
