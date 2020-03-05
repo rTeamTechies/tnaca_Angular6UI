@@ -29,11 +29,13 @@ export class LockerAddEditComponent implements OnInit {
   public lockerUnavailableFlag: boolean = false;
   public amountNullFlag: boolean = false;
   public disableSubmitNoMember:boolean = true;
+  public todayDate = this.datepipe.transform(new Date(), 'dd-MM-yyyy');
 
 
   public a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
   public b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
   public n : any;
+  public memberRollNo: any;
 
 
   constructor(private formBuilder: FormBuilder, 
@@ -105,6 +107,7 @@ export class LockerAddEditComponent implements OnInit {
   }
 
   getRollNoDetails() {
+    this.memberRollNo = this.addMemberLocker.value.rollNo;
     this.removeErrorFlagOnChange();
     this.userService.getMemberByRollNo(this.addMemberLocker.value.rollNo)
       .subscribe((response: any) => {

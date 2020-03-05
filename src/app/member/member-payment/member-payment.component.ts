@@ -5,6 +5,7 @@ import { UserService } from "../../service/user.service";
 import { ToastrService } from 'ngx-toastr';
 import { Data } from '../../model/data.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { DatePipe } from '@angular/common';
 
 @Component({ 
 
@@ -29,8 +30,8 @@ export class MemberPaymentComponent implements OnInit {
   public amountInWords: string;
   public check : boolean =false;
   public modalRef: BsModalRef;
-
   public disableSubmitFlag: boolean = true;
+  public todayDate = this.datepipe.transform(new Date(), 'dd-MM-yyyy');
   
   public a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
   public b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
@@ -43,7 +44,7 @@ export class MemberPaymentComponent implements OnInit {
     private toastr: ToastrService,
     public activeRoute: ActivatedRoute,
     private data: Data,
-    public modalService: BsModalService) { 
+    public modalService: BsModalService, public datepipe: DatePipe) { 
       if(this.data.memberDataTransfer && this.data.memberDataTransfer.member_id != undefined && this.data.memberDataTransfer.member_id != ""){
         this.fromListingPage = true;
       }

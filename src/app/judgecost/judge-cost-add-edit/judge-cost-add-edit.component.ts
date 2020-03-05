@@ -25,6 +25,7 @@ export class JudgeCostAddEditComponent implements OnInit {
   public judgeNameNullFlag: boolean = false;
   public caseNoNullFlag: boolean = false;
   public amountNullFlag: boolean = false;
+  public todayDate = this.datepipe.transform(new Date(), 'dd-MM-yyyy');
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,

@@ -46,3 +46,8 @@
 .receipt-header div:last-child {
     float: right;
 }
+
+.locker-mem-photo {
+    width: 60%;
+    padding-top: 20px;
+}

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { UserService } from "../../service/user.service";
 import { ToastrService } from 'ngx-toastr';
 import { Data } from '../../model/data.model';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-advocate-donation-add',
@@ -24,6 +24,7 @@ export class AdvocateDonationAddComponent implements OnInit {
 
   public advNameNullFlag: boolean = false;
   public amountNullFlag: boolean = false;
+  public todayDate = this.datepipe.transform(new Date(), 'dd-MM-yyyy');
 
   constructor(private formBuilder: FormBuilder, 
     private router: Router,
