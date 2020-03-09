@@ -58,7 +58,7 @@
         </div>
         <div class="form-group">
           <label for="amount">Membership Amount:</label>
-          <input [ngClass]="{'inputErrorBorder' : amountNullFlag}" type="amount" formControlName="amount" autocomplete="off" placeholder="Membership Amount" name="amount"
+          <input [ngClass]="{'inputErrorBorder' : amountNullFlag}" type="number" formControlName="amount" autocomplete="off" placeholder="Membership Amount" name="amount"
             class="form-control" id="amount">
             <label class="error-label" *ngIf="amountNullFlag">Membership Amount cannot be blank</label>
         </div>
@@ -214,7 +214,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <b class="hide">Amount in Words: <span [innerHTML]="amountInWords"></span></b>
+      <b>Amount in Words: <span [innerHTML]="amountInWords"></span></b>
     </div>
   </div>
 

@@ -36,7 +36,6 @@ export class MemberListComponent implements OnInit{
 
   ngOnInit(){
     this.menu1Active = true;
-    //this.loading = true;
     this.userService.getMemberList()
     .subscribe((response : any) => {
       this.memberCount = response.data.length;
@@ -52,8 +51,11 @@ export class MemberListComponent implements OnInit{
       this.memberCount = this.filteredData.length;
     } else {
       this.responseData = this.filteredData.filter(x => 
-         (x.name.trim().toLowerCase().includes(term.trim().toLowerCase()) || 
-         x.roll_no.toString().trim().includes(term.trim()))
+         (x.name.toLowerCase().includes(term.trim().toLowerCase()) || 
+         x.roll_no.toString().trim().includes(term.trim()) ||
+         (x.advocate_name && x.advocate_name.toLowerCase().includes(term.trim().toLowerCase())) ||
+         (x.home_address && x.home_address.toLowerCase().includes(term.trim().toLowerCase()))
+         )
       );
       this.memberCount = this.responseData.length;
     }
@@ -85,6 +87,13 @@ export class MemberListComponent implements OnInit{
     this.loading = true;
     this.data.memberDataTransfer = item;
     this.router.navigate(["locker-add-edit"]);
+  }
+
+  openContactInfoPage(template: TemplateRef<any>){
+    this.modalRef = this.modalService.show(template, {
+      animated: true,
+      backdrop: 'static'
+    }); 
   }
 }
 

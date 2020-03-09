@@ -26,12 +26,27 @@
 
 <div id="advocateDonationReport" class="member-section height-100">
   <div class="row m-0">
-    <div class="col-sm-12">
+    <div class="col-sm-8">
       <h3>
         Advocate Donation History
       </h3>
     </div>
+    <div class="col-sm-4 text-right no-print">
+      <a tooltip="Print Page" placement="bottom" (click)="printPage();"><span class="glyphicon glyphicon-print"
+          style="font-size: 25px;margin-top: 20px;"></span></a>
+    </div>
   </div>
+
+  <div class="row m-0 padding-top-15" *ngIf="advDonationListRes.length > 0">
+    <div class="col-sm-6">
+      <h3>Record Count: {{totalRecords}}</h3>
+    </div>
+    <div class="col-sm-6 text-right">
+      <h3>Total Amount: {{totalAmount}}</h3>
+    </div>
+  </div>
+
+
   <div class="row m-0">
     <div class="col-sm-12">
       <table id="member-locker-history" class="table table-bordered table-hover table-responsive" [mfData]="advDonationListRes"
@@ -45,15 +60,12 @@
             <mfDefaultSorter by="bill_date">Bill Date</mfDefaultSorter>
           </th>
           <th>
-            <mfDefaultSorter by="adv_roll_no">Advocate Roll No</mfDefaultSorter>
-          </th>
-          <th>
             <mfDefaultSorter by="adv_name">Advocate Name</mfDefaultSorter>
           </th>
           <th>
             <mfDefaultSorter by="amount">Amount</mfDefaultSorter>
           </th>
-          <th>
+          <th class="no-print">
             Action
           </th>
         </tr>
@@ -62,10 +74,9 @@
         <tr *ngFor="let item of mf.data">
           <td>{{item.bill_no}}</td>
           <td>{{item.bill_date | date}}</td>
-          <td>{{item.adv_roll_no}}</td>
           <td>{{item.adv_name}}</td>
           <td>{{item.amount}}</td>
-          <td class="text-center">
+          <td class="text-center no-print">
             <a tooltip="View" placement="bottom" (click)="printBill(item);"><span
                 class="glyphicon glyphicon-print"></span></a>
           </td>
@@ -89,80 +100,4 @@
   </div>
 
 
-</div>
-
-
-<div class="print-section">
-  <div class="row">
-    <div class="col-md-12 receipt-header">
-      <div style="min-width: 32%;">
-        <h4>Regn. No. 89/69</h4>
-        <h4>Estd: 1913</h4>
-      </div>
-      <div style="min-width: 32%;padding-left: 120px;"><img class="print-logo" src="./assets/images/logo.png"></div>
-      <div style="min-width: 32%;">
-        <h4>Email: tnaca1913@gmail.com</h4>
-        <h4>Phone: 7358216573</h4>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="row border-bottom">
-    <div class="col-md-12 text-center">
-      <h2>Tamilnadu Advocate's Clerk's Association</h2>
-      <h3>High Court, Chennai</h3>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 text-right">
-      <h3>Receipt No:<span [innerHTML]="generatedBillNo"></span></h3>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-12 text-center">
-      <h3>Advocate Donation Receipt</h3>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>S. No</th>
-            <th>Receipt No</th>
-            <th>Advocate Roll No</th>
-            <th>Advocate Name</th>
-            <th>Amount</th>
-            <th>Payment Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>{{this.printData.billNo}}</td>
-            <td>{{this.printData.advRollNo}}</td>
-            <td>{{this.printData.advName}}</td>
-            <td>{{this.printData.amount}}</td>
-            <td>{{this.printData.paymentType}}</td>            
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <b>Amount in Words: <span [innerHTML]="amountInWords"></span></b>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 text-right pad-100">
-      <b>Treasurer</b>
-    </div>
-  </div>
 </div>

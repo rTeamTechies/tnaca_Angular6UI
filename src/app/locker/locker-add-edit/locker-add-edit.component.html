@@ -68,7 +68,7 @@
 
         <div class="form-group">
           <label for="amount">Amount:</label>
-          <input formControlName="amount" autocomplete="off" placeholder="Amount" name="amount" class="form-control"
+          <input formControlName="amount" type="number" autocomplete="off" placeholder="Amount" name="amount" class="form-control"
             id="amount">
             <label class="error-label" *ngIf="amountNullFlag">Amount cannot be blank.</label>
         </div>
@@ -212,7 +212,7 @@
 
  <div class="row">
    <div class="col-md-12">
-     <b class="hide">Amount in Words: <span [innerHTML]="amountInWords"></span></b>
+     <b>Amount in Words: <span [innerHTML]="amountInWords"></span></b>
    </div>
  </div>
 

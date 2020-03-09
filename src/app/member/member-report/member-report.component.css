@@ -11,3 +11,10 @@ input {
 input:focus{
     outline : none;
 }
+
+@media print{
+    table#member-report-datatable-2 tr td {
+        padding: 40px;
+        font-size: 20px;
+    }
+}

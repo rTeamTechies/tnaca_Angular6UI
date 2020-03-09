@@ -142,7 +142,7 @@ export class MemberPaymentComponent implements OnInit {
       this.loading = false;
     }
 
-    if (this.paymentForm.value.amount.trim() == "") {
+    if (this.paymentForm.value.amount == 0) {
       this.amountNullFlag = true;
       successFlag = false;
       this.loading = false;
@@ -196,7 +196,7 @@ inWords (num) {
     str += (this.n[3] != 0) ? (this.a[Number(this.n[3])] || this.b[this.n[3][0]] + ' ' + this.a[this.n[3][1]]) + 'thousand ' : '';
     str += (this.n[4] != 0) ? (this.a[Number(this.n[4])] || this.b[this.n[4][0]] + ' ' + this.a[this.n[4][1]]) + 'hundred ' : '';
     str += (this.n[5] != 0) ? ((str != '') ? 'and ' : '') + (this.a[Number(this.n[5])] || this.b[this.n[5][0]] + ' ' + this.a[this.n[5][1]]) + 'only ' : '';
-    return str;
+    return str = str[0].toUpperCase() + str.slice(1);;
 }
 
 printBill(item: any){

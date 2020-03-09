@@ -52,6 +52,8 @@ export class LockerAddEditComponent implements OnInit {
 
   ngOnInit() {
     if(this.fromListingPage){
+      this.memberName = this.data.memberDataTransfer.name;
+      this.memberRollNo = this.data.memberDataTransfer.roll_no;
       this.disableSubmitNoMember = false;
       this.addMemberLocker = this.formBuilder.group({      
         billNo: ['', Validators.required],
@@ -65,11 +67,10 @@ export class LockerAddEditComponent implements OnInit {
         lockerFlag : [1]
       });
 
-      this.userService.getMemberPayment("reportFlag=3&lockerFlag=0&rollNo="+this.data.memberDataTransfer.roll_no)
+      this.userService.getMemberPayment("reportFlag=3&lockerFlag=1&rollNo="+this.data.memberDataTransfer.roll_no)
         .subscribe((response : any) => {
           this.memberLockertHistoryres = response.data;
         });
-
     }else{      
       this.addMemberLocker = this.formBuilder.group({      
         billNo: ['', Validators.required],
@@ -131,6 +132,7 @@ export class LockerAddEditComponent implements OnInit {
     this.addMemberLocker.reset();
     this.addMemberLocker.controls.lockerFlag.patchValue(1);
     this.memberLockertHistoryres = [];
+    this.memberRollNo = 0;
   }
 
 
@@ -149,7 +151,7 @@ inWords (num) {
     str += (this.n[3] != 0) ? (this.a[Number(this.n[3])] || this.b[this.n[3][0]] + ' ' + this.a[this.n[3][1]]) + 'thousand ' : '';
     str += (this.n[4] != 0) ? (this.a[Number(this.n[4])] || this.b[this.n[4][0]] + ' ' + this.a[this.n[4][1]]) + 'hundred ' : '';
     str += (this.n[5] != 0) ? ((str != '') ? 'and ' : '') + (this.a[Number(this.n[5])] || this.b[this.n[5][0]] + ' ' + this.a[this.n[5][1]]) + 'only ' : '';
-    return str;
+    return str = str[0].toUpperCase() + str.slice(1);;
 }
 
 
@@ -192,7 +194,7 @@ removeErrorFlagOnChange(){
 formValidation(){
   this.removeErrorFlagOnChange();
   var validFlag = true;
-  if(this.addMemberLocker.value.rollNo.trim() == ""){
+  if(this.addMemberLocker.value.rollNo == "" || this.addMemberLocker.value.rollNo == 0){
     this.rollNoNullFlag = true;
     validFlag = false;
   }else if(this.addMemberLocker.value.fromDate == ""){
@@ -201,10 +203,10 @@ formValidation(){
   }else if(this.addMemberLocker.value.toDate == ""){
     this.toDateNullFlag = true;
     validFlag = false;
-  }else if(this.addMemberLocker.value.lockerId.trim() == ""){
+  }else if(this.addMemberLocker.value.lockerId == "" || this.addMemberLocker.value.lockerId == 0){
     this.lockerIdNullFlag = true;
     validFlag = false;
-  }else if(this.addMemberLocker.value.amount.trim() == ""){
+  }else if(this.addMemberLocker.value.amount == "" || this.addMemberLocker.value.amount == 0){
     this.amountNullFlag = true;
     validFlag = false;
   }else if(this.lockerUnavailableFlag){

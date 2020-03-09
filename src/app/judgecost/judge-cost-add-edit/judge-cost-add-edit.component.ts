@@ -92,7 +92,7 @@ inWords (num) {
   str += (this.n[3] != 0) ? (this.a[Number(this.n[3])] || this.b[this.n[3][0]] + ' ' + this.a[this.n[3][1]]) + 'thousand ' : '';
   str += (this.n[4] != 0) ? (this.a[Number(this.n[4])] || this.b[this.n[4][0]] + ' ' + this.a[this.n[4][1]]) + 'hundred ' : '';
   str += (this.n[5] != 0) ? ((str != '') ? 'and ' : '') + (this.a[Number(this.n[5])] || this.b[this.n[5][0]] + ' ' + this.a[this.n[5][1]]) + 'only ' : '';
-  return str;
+  return str = str[0].toUpperCase() + str.slice(1);;
 }
 
 mandatoryValidationsPass(){
@@ -104,7 +104,7 @@ mandatoryValidationsPass(){
   }else if(this.addJudgeCostForm.value.caseNo == null || this.addJudgeCostForm.value.caseNo.trim() == ""){
     this.caseNoNullFlag = true;
     success = false;
-  }else  if(this.addJudgeCostForm.value.amount == null || this.addJudgeCostForm.value.amount.trim() == ""){
+  }else  if(this.addJudgeCostForm.value.amount == null || this.addJudgeCostForm.value.amount == 0){
     this.amountNullFlag = true;
     success = false;
   }

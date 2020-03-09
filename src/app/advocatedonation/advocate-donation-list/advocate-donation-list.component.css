@@ -1,14 +1,6 @@
-
-.print-section {
-  display: none;
-}
-
 @media print {
-  .print-section {
-    display: block;
-  }
 
-  #advocateDonationReport, .sub-menu, .no-print {
+  .sub-menu, .no-print {
     display: none;
   }
 }

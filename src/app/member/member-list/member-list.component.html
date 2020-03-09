@@ -11,6 +11,8 @@
       <li><a href="/advocate-donation-add">Advocate Donation</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
+      <li (click)="openContactInfoPage(contactInfoModal)"><a><span class="glyphicon glyphicon-info-sign"></span> Contact
+          Us</a></li>
       <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
     </ul>
   </div>
@@ -33,8 +35,9 @@
       <div class="col-sm-6 pad-top-20">
         <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-          <input id="searchMember" type="text" class="form-control" [(ngModel)]="search" name="searchMember" (ngModelChange)="filter($event)" autocomplete="off" placeholder="Search Member">
-        </div>    
+          <input id="searchMember" type="text" class="form-control" [(ngModel)]="search" name="searchMember"
+            (ngModelChange)="filter($event)" autocomplete="off" placeholder="Search Member">
+        </div>
       </div>
     </div>
     <table id="members-list" class="table table-bordered table-hover table-responsive" [mfData]="responseData"
@@ -60,7 +63,7 @@
             <mfDefaultSorter by="advocate_name">Advocate Name</mfDefaultSorter>
           </th>
           <th>
-            <mfDefaultSorter by="advocate_home_address">Address</mfDefaultSorter>
+            <mfDefaultSorter by="home_address">Address</mfDefaultSorter>
           </th>
           <th style="min-width: 160px">
             Action
@@ -70,17 +73,22 @@
       <tbody>
         <tr *ngFor="let item of mf.data">
           <td>{{item.roll_no}}</td>
-          <td class="text-center"><img src="./assets/images/member_photos/{{item.roll_no}}.jpg"  onerror="this.src='./assets/images/member_photos/default.jpg';"></td>
+          <td class="text-center"><img src="./assets/images/member_photos/{{item.roll_no}}.jpg"
+              onerror="this.src='./assets/images/member_photos/default.jpg';"></td>
           <td>{{item.name}}</td>
           <td>{{item.mobile_number}}</td>
           <td>{{item.email}}</td>
           <td>{{item.advocate_name}}</td>
           <td>{{item.home_address}}</td>
           <td>
-            <a tooltip="View" placement="bottom" (click)="openMemberModal(item,memberView);"><span class="glyphicon glyphicon-eye-open"></span></a>
-            <a tooltip="Edit" placement="bottom" show-delay="500"  (click)="openEditScreen(item);"><span class="glyphicon glyphicon-edit"></span></a>
-            <a tooltip="Payment" placement="bottom" show-delay="500" (click)="openPaymentScreen(item);"><span class="glyphicon glyphicon-briefcase"></span></a>
-            <a tooltip="Locker" placement="bottom" show-delay="500" (click)="openAddLockerScreen(item);"><span class="glyphicon glyphicon-lock"></span></a>
+            <a tooltip="View" placement="bottom" (click)="openMemberModal(item,memberView);"><span
+                class="glyphicon glyphicon-eye-open"></span></a>
+            <a tooltip="Edit" placement="bottom" show-delay="500" (click)="openEditScreen(item);"><span
+                class="glyphicon glyphicon-edit"></span></a>
+            <a tooltip="Payment" placement="bottom" show-delay="500" (click)="openPaymentScreen(item);"><span
+                class="glyphicon glyphicon-briefcase"></span></a>
+            <a tooltip="Locker" placement="bottom" show-delay="500" (click)="openAddLockerScreen(item);"><span
+                class="glyphicon glyphicon-lock"></span></a>
           </td>
         </tr>
       </tbody>
@@ -92,6 +100,31 @@
         </tr>
       </tfoot>
     </table>
+  </div>
+
+  <div class="row">
+    <ng-template #contactInfoModal>
+      <div class="row modal-header m-0">
+        <div class="col-sm-6">
+          <h3>Contact Us</h3>
+        </div>
+        <div class="col-sm-6 text-right">
+          <img class="text-right width-50" src="/assets/images/rTeam_logo.JPG" />
+        </div>
+      </div>
+      <div class="modal-body row">
+        <div class="col-sm-6">
+          Our team is with you to give support on any queries or issues you face in the application.
+        </div>
+        <div class="col-sm-6">
+          <label><span class="glyphicon glyphicon-phone"></span> 8015761437/6380188364</label>
+          <label><span class="glyphicon glyphicon-envelope"></span> r.teamtechies2020@gmail.com</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="modalRef.hide();">Close</button>
+      </div>
+    </ng-template>
   </div>
 
 
@@ -106,8 +139,8 @@
 
       <div class="modal-body">
         <div class="row">
-          <div class="col-sm-12 text-center">            
-              <img class="img-circle" src="/assets/images/member_photos/{{memberViewData.roll_no}}.jpg"/>
+          <div class="col-sm-12 text-center">
+            <img class="img-circle" src="/assets/images/member_photos/{{memberViewData.roll_no}}.jpg" />
           </div>
         </div>
 
@@ -121,66 +154,82 @@
               <tr>
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Mobile Number</label></div>
-                  <div class="mem-detail-value-div pl-5"><span class="mem-detail-value">{{memberViewData.mobile_number || "Not Available"}}</span></div>
+                  <div class="mem-detail-value-div pl-5"><span
+                      class="mem-detail-value">{{memberViewData.mobile_number || "Not Available"}}</span></div>
                 </td>
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Email Id</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.email || "Not Available"}}</span></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.email || "Not Available"}}</span></div>
                 </td>
               </tr>
 
               <tr>
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Father's Name</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.father_name || "Not Available"}}</span></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.father_name || "Not Available"}}</span></div>
                 </td>
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Blood Group</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.blood_group || "Not Available"}}</span></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.blood_group || "Not Available"}}</span></div>
                 </td>
               </tr>
 
               <tr>
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Home Address</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.home_address || "Not Available"}}</span></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.home_address || "Not Available"}}</span></div>
                 </td>
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">DOB</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.dob || "Not Available"}}</span></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.dob || "Not Available"}}</span></div>
                 </td>
               </tr>
 
               <tr>
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Office Address</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.office_address || "Not Available"}}</span></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.office_address || "Not Available"}}</span></div>
                 </td>
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Name</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_name || "Not Available"}}</span></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.advocate_name || "Not Available"}}</span></div>
                 </td>
               </tr>
 
               <tr>
                 <td>
-                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Home Address</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_home_address || "Not Available"}}</span></div>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Home
+                      Address</label></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.advocate_home_address || "Not Available"}}</span></div>
                 </td>
                 <td>
-                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Office Address</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_office_address || "Not Available"}}</span></div>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Office
+                      Address</label></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.advocate_office_address || "Not Available"}}</span>
+                  </div>
                 </td>
               </tr>
 
               <tr>
                 <td>
-                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Mobile Number</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_mobile_number || "Not Available"}}</span></div>
+                  <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Mobile
+                      Number</label></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.advocate_mobile_number || "Not Available"}}</span></div>
                 </td>
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">Advocate Email</label></div>
-                  <div class="mem-detail-value-div"><span class="mem-detail-value">{{memberViewData.advocate_email || "Not Available"}}</span></div>
+                  <div class="mem-detail-value-div"><span
+                      class="mem-detail-value">{{memberViewData.advocate_email || "Not Available"}}</span></div>
                 </td>
               </tr>
             </tbody>
@@ -191,4 +240,5 @@
     </ng-template>
   </div>
 </div>
-<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>

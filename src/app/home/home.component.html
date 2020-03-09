@@ -11,6 +11,8 @@
       <li><a href="/advocate-donation-add">Advocate Donation</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
+      <li (click)="openContactInfoPage(contactInfoModal)"><a><span class="glyphicon glyphicon-info-sign"></span> Contact
+        Us</a></li>
       <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
     </ul>
   </div>
@@ -26,4 +28,28 @@
 </div>
 <div class="member-section height-100 text-center" style='padding-top: 50px;'>
   <img src="./assets/images/logo.png">
+  <div class="row">
+    <ng-template #contactInfoModal>
+      <div class="row modal-header m-0">
+        <div class="col-sm-6">
+          <h3>Contact Us</h3>
+        </div>
+        <div class="col-sm-6 text-right">
+          <img class="text-right width-50" src="/assets/images/rTeam_logo.JPG" />
+        </div>
+      </div>
+      <div class="modal-body row">
+        <div class="col-sm-6">
+          Our team is with you to give support on any queries or issues you face in the application.
+        </div>
+        <div class="col-sm-6">
+          <label><span class="glyphicon glyphicon-phone"></span> 8015761437/6380188364</label>
+          <label><span class="glyphicon glyphicon-envelope"></span> r.teamtechies2020@gmail.com</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="modalRef.hide();">Close</button>
+      </div>
+    </ng-template>
+  </div>
 </div>

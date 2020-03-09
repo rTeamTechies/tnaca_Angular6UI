@@ -1,14 +1,5 @@
-
-.print-section {
-    display: none;
-  }
-  
-  @media print {
-    .print-section {
-      display: block;
-    }
-  
-    #judgeCostBillingReport, .sub-menu, .no-print {
+ @media print {
+    .sub-menu, .no-print {
       display: none;
     }
   }
