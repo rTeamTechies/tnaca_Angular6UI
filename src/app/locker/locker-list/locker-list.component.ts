@@ -41,6 +41,9 @@ export class LockerListComponent implements OnInit {
     public data: Data, public datepipe: DatePipe) { }
 
   ngOnInit() {
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }
     this.billingDetailsResponse = [];
     this.selectedReportType = 0;
   }

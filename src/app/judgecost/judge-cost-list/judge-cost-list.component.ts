@@ -38,20 +38,23 @@ export class JudgeCostListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.loading = true;
-    this.userService.getJudgeCost()
-    .subscribe((response : any) => {
-      let totalAmountCalc = 0;
-      for (let i = 0; i < response.data.length; i++) {
-        totalAmountCalc = totalAmountCalc+ (+response.data[i].amount);
-      }
-      this.totalRecords = response.data.length;
-      this.totalAmount = totalAmountCalc;
-      
-      this.judgeCostBillingListRes = response.data;
-      this.loading = false;
-    });
-
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }else{
+      this.loading = true;
+      this.userService.getJudgeCost()
+      .subscribe((response : any) => {
+        let totalAmountCalc = 0;
+        for (let i = 0; i < response.data.length; i++) {
+          totalAmountCalc = totalAmountCalc+ (+response.data[i].amount);
+        }
+        this.totalRecords = response.data.length;
+        this.totalAmount = totalAmountCalc;
+        
+        this.judgeCostBillingListRes = response.data;
+        this.loading = false;
+      });
+    }
   }
 
   printBill(item: any){

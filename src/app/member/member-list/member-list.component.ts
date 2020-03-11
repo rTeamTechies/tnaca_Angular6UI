@@ -35,6 +35,9 @@ export class MemberListComponent implements OnInit{
     }
 
   ngOnInit(){
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }
     this.menu1Active = true;
     this.userService.getMemberList()
     .subscribe((response : any) => {

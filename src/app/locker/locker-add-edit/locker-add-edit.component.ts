@@ -51,6 +51,9 @@ export class LockerAddEditComponent implements OnInit {
     }
 
   ngOnInit() {
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }
     if(this.fromListingPage){
       this.memberName = this.data.memberDataTransfer.name;
       this.memberRollNo = this.data.memberDataTransfer.roll_no;

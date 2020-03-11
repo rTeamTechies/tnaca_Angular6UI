@@ -55,6 +55,9 @@ export class MemberPaymentComponent implements OnInit {
     public amountNullFlag: boolean = false;
 
   ngOnInit() {
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }
     this.loading = true;
     this.currentYear = this.currenDate.getFullYear();
     for(var i=0 ; i < 31; i++){

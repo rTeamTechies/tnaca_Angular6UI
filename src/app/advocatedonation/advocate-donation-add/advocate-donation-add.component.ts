@@ -34,12 +34,16 @@ export class AdvocateDonationAddComponent implements OnInit {
     private data: Data,public datepipe: DatePipe) { }
 
   ngOnInit() {
-    this.addAdvDonationForm = this.formBuilder.group({
-      advName: ['', Validators.required],
-      amount : ['',Validators.required],
-      paymentType: ['CASH'],
-      billDate: [this.datepipe.transform(new Date(), 'yyyy-MM-dd')]
-    });
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }else{
+      this.addAdvDonationForm = this.formBuilder.group({
+        advName: ['', Validators.required],
+        amount : ['',Validators.required],
+        paymentType: ['CASH'],
+        billDate: [this.datepipe.transform(new Date(), 'yyyy-MM-dd')]
+      });
+    }
   }
 
   onSubmit(){

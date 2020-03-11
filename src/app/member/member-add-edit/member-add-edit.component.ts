@@ -30,6 +30,7 @@ export class MemberAddEditComponent implements OnInit {
   currentlyChecked: CheckBoxType;
   public modalRef: BsModalRef;
   public rollNoExistFlag: boolean = false;
+  public fileToUpload: any;
 
   constructor(private formBuilder: FormBuilder, 
     private router: Router, 
@@ -47,6 +48,9 @@ export class MemberAddEditComponent implements OnInit {
     }
 
   ngOnInit() {
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }
     this.loading = true;
     if(this.editFlag){
       this.memberRollNo = this.data.memberDataTransfer.roll_no;
@@ -260,5 +264,4 @@ export class MemberAddEditComponent implements OnInit {
       this.rollNullFlag = false;
     }
   }
-
 }

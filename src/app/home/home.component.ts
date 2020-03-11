@@ -1,5 +1,6 @@
 import { Component, OnInit,TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,12 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 export class HomeComponent implements OnInit {
   modalRef: BsModalRef;
 
-  constructor(public modalService: BsModalService,) { }
+  constructor(public modalService: BsModalService,private router: Router) { }
 
   ngOnInit() {
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }
   }
 
   openContactInfoPage(template: TemplateRef<any>){

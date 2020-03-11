@@ -36,13 +36,17 @@ export class JudgeCostAddEditComponent implements OnInit {
 
 
   ngOnInit() {
-    this.addJudgeCostForm = this.formBuilder.group({
-      billDate: [this.datepipe.transform(new Date(), 'yyyy-MM-dd')],
-      judgeName: ['', Validators.required],
-      caseNo: ['', Validators.required],
-      amount: ['', Validators.required],
-      paymentType: ['CASH']
-    });
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }else{
+      this.addJudgeCostForm = this.formBuilder.group({
+        billDate: [this.datepipe.transform(new Date(), 'yyyy-MM-dd')],
+        judgeName: ['', Validators.required],
+        caseNo: ['', Validators.required],
+        amount: ['', Validators.required],
+        paymentType: ['CASH']
+      });
+    }
   }
 
   onSubmit() {

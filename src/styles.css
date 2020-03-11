@@ -81,6 +81,10 @@ body {
     width: 25%;
 }
 
+.width-40 {
+    width: 40% !important;
+}
+
 
 .inline-block {
     display: inline-block;
@@ -117,4 +121,8 @@ body {
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.nav li a {
+    cursor: pointer;
 }

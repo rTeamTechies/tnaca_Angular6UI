@@ -29,6 +29,9 @@ export class LockerSurrenderComponent implements OnInit {
     public datepipe: DatePipe) { }
 
   ngOnInit() {
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }
     this.surrenderMemberLocker = this.formBuilder.group({
       billNo: [''], 
     });

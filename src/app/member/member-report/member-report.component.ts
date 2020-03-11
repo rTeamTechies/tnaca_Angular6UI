@@ -56,10 +56,13 @@ export class MemberReportComponent implements OnInit {
     public datepipe: DatePipe) { }
 
   ngOnInit() {
+    if(sessionStorage.getItem("isLoggedIn") != "true"){
+      this.router.navigate(["login"]);
+    }
     this.enteredYear = this.currentDate.getFullYear();
     this.currentYear = this.currentDate.getFullYear();
     for(var i=0 ; i < 31; i++){
-      this.year.push(this.currentYear+i);
+      this.year.push(2000+i);
     }
     this.selectedReportType = 0;
   }

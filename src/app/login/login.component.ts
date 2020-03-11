@@ -40,9 +40,11 @@ export class LoginComponent implements OnInit {
       this.userService.login(this.userData)
         .subscribe((response: any) => {
           if(response.status == "Success"){
+            sessionStorage.setItem('isLoggedIn', "true");
             this.loading = false;
             this.router.navigate(['home']);
           }else if(response.status == "Failure"){
+            sessionStorage.setItem('isLoggedIn', "false");
             this.loading = false;
             this.invalidLoginFlag = true;
           }
@@ -77,7 +79,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLogin = true;
+    sessionStorage.clear();
   }
 
 
