@@ -54,7 +54,7 @@
         <div class="col-sm-5">
             <div class="form-group">
                 <label for="rollNo">Roll No:</label>
-                <input [ngClass]="{'inputErrorBorder' : rollNullFlag}" type="rollNo" autocomplete="off"  formControlName="rollNo" (keyup)="removeError('rollNo')" (focusout)="getRollNoDetails($event)" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo">
+                <input [ngClass]="{'inputErrorBorder' : rollNullFlag}" type="number" autocomplete="off"  formControlName="rollNo" (keyup)="removeError('rollNo')" (focusout)="getRollNoDetails($event)" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo">
                 <label class="error-label" *ngIf="rollNullFlag">Roll Number cannot be blank</label>
               </div>
           
@@ -72,7 +72,7 @@
               <div class="form-group">
                 <label for="dob">Date of Birth:</label>
                 <input formControlName="dob" readonly autocomplete="off" id="dob" type="text" autocomplete="off" placeholder="Date of Birth" class="form-control"
-                bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" [bsValue]="bsValue">
               </div>
 
               <div class="form-group">
@@ -82,8 +82,8 @@
 
               <div class="form-group">
                 <label for="doj">Date of Joining:</label>
-                <input formControlName="doj" autocomplete="off" id="doj" type="text" autocomplete="off" placeholder="Date of Joining" class="form-control"
-                bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+                <input formControlName="doj" readonly autocomplete="off" id="doj" type="text" autocomplete="off" placeholder="Date of Joining" class="form-control"
+                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" [bsValue]="bsValue">
               </div>
           
               <div class="form-group">

@@ -32,35 +32,36 @@
 
         <div class="form-group">
           <label for="rollNo">Roll No:</label>
-          <input formControlName="rollNo" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo" (focusout)="getRollNoDetails()">
+          <input formControlName="rollNo" type="number" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control" id="rollNo" (focusout)="getRollNoDetails()">
           <label class="error-label" *ngIf="rollNoNullFlag">Roll Number cannot be blank.</label>
         </div>
 
         <div class="form-group">
           <label for="Name">Name:</label>
           <input [(ngModel)] = "memberName" formControlName="name" autocomplete="off" placeholder="Name" name="name" class="form-control" id="name">
+          <label class="error-label" *ngIf="nameNullFlag">Name cannot be blank.</label>
         </div>
 
         <div class="form-group">
           <label for="fromDate">From Date:</label>
-          <input formControlName="fromDate" id="fromDate" type="text" autocomplete="off" placeholder="From Date" class="form-control"
-            bsDatepicker [bsConfig]="{ isAnimated: true }">
+          <input formControlName="fromDate" readonly id="fromDate" type="text" autocomplete="off" placeholder="From Date" class="form-control"
+            bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}">
           <label class="error-label" *ngIf="fromDateNullFlag">From Date cannot be blank.</label>
         </div>
 
         <div class="form-group">
           <label for="toDate">To Date:</label>
-          <input formControlName="toDate" id="toDate" type="text"
+          <input formControlName="toDate" readonly id="toDate" type="text"
            autocomplete="off" placeholder="To Date"
            class="form-control"
            bsDatepicker
-           [bsConfig]="{ isAnimated: true }">
+           [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}">
            <label class="error-label" *ngIf="toDateNullFlag">To Date cannot be blank.</label>
         </div> 
 
         <div class="form-group">
           <label for="lockerId">Locker Number:</label>
-          <input formControlName="lockerId" autocomplete="off" placeholder="Locker Number" name="lockerId" (focusout)="checkLockerAvailability()" class="form-control"
+          <input formControlName="lockerId" autocomplete="off" type= "number" placeholder="Locker Number" name="lockerId" (focusout)="checkLockerAvailability()" class="form-control"
             id="lockerId">
           <label class="error-label" *ngIf="lockerIdNullFlag">Locker Number cannot be blank.</label>
           <label class="error-label" *ngIf="lockerUnavailableFlag">Entered Locker Number is already alloted.</label>
@@ -115,10 +116,10 @@
         <tbody>
           <tr *ngFor="let item of mf.data">
             <td>{{item.bill_no}}</td>
-            <td>{{item.bill_date | date}}</td>
+            <td>{{item.bill_date | date: 'dd/MM/yyyy'}}</td>
             <td>{{item.locker_id}}</td>
-            <td>{{item.from_date | date}}</td>
-            <td>{{item.to_date | date}}</td>
+            <td>{{item.from_date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{item.to_date | date: 'dd/MM/yyyy'}}</td>
             <td>{{item.amount}}</td>
             <td class="text-center">
               <a tooltip="View & Print" placement="bottom" (click)="printBill(item);"><span

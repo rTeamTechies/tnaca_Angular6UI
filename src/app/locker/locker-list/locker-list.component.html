@@ -42,13 +42,13 @@
       </div>
 
       <div class="padding-left-15" *ngIf = "searchByDateRange">
-        <input [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}"  [(ngModel)]="enteredFromDate"  id="enteredFromDate" type="text" autocomplete="off" placeholder="Start Date"
-        bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+        <input readonly [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}"  [(ngModel)]="enteredFromDate"  id="enteredFromDate" type="text" autocomplete="off" placeholder="Start Date"
+        bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" [bsValue]="bsValue">
       </div>
 
       <div class="padding-left-15" *ngIf = "searchByDateRange">
-        <input [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}"  [(ngModel)]="enteredToDate" id="enteredToDate" type="text" autocomplete="off" placeholder="End Date"
-        bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+        <input readonly [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}"  [(ngModel)]="enteredToDate" id="enteredToDate" type="text" autocomplete="off" placeholder="End Date"
+        bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" [bsValue]="bsValue">
       </div>
 
       <div class="padding-left-15">
@@ -126,12 +126,12 @@
         <tbody>
           <tr *ngFor="let item of mf.data">
             <td>{{item.bill_no}}</td>
-            <td>{{item.bill_date | date}}</td>
+            <td>{{item.bill_date | date: 'dd/MM/yyyy'}}</td>
             <td>{{item.roll_no}}</td>
             <td>{{item.name}}</td>
             <td>{{item.locker_id}}</td>
-            <td>{{item.from_date | date}}</td>
-            <td>{{item.to_date | date}}</td>
+            <td>{{item.from_date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{item.to_date | date: 'dd/MM/yyyy'}}</td>
             <td>{{item.amount}}</td>
           </tr>
         </tbody>

@@ -76,7 +76,7 @@ export class MemberPaymentComponent implements OnInit {
         name: [this.data.memberDataTransfer.name, Validators.required],
         subscriptionType: ['YEARLY',Validators.required],
         subscriptionYear : [this.currenDate.getFullYear(),Validators.required],
-        amount: ['', Validators.required],
+        amount: [null, Validators.required],
         paymentType: ['CASH'],  
         membershipFlag : [1],
         fromDate: [''],
@@ -85,11 +85,11 @@ export class MemberPaymentComponent implements OnInit {
       this.loading = false;
     }else{     
       this.paymentForm = this.formBuilder.group({      
-        rollNo: ['', Validators.required],
+        rollNo: [null, Validators.required],
         name: ['', Validators.required],
         subscriptionType: ['YEARLY',Validators.required],
         subscriptionYear : [this.currenDate.getFullYear(),Validators.required],
-        amount: ['',Validators.required],
+        amount: [null,Validators.required],
         paymentType: ['CASH'],
         membershipFlag : [1],
         fromDate: [''],
@@ -133,19 +133,22 @@ export class MemberPaymentComponent implements OnInit {
     this.rollNullFlag = false;
     this.memberNameNullFlag = false;
     this.amountNullFlag = false;
-    if (this.paymentForm.value.rollNo.toString().trim() == "") {
+    if (this.paymentForm.value.rollNo == null || this.paymentForm.value.rollNo == undefined ||
+      this.paymentForm.value.rollNo == 0) {
       this.rollNullFlag = true;
       successFlag = false;
       this.loading = false;
     }
 
-    if (this.paymentForm.value.name.trim() == "") {
+    if (this.paymentForm.value.name == null || this.paymentForm.value.name == undefined ||
+      this.paymentForm.value.name.trim() == "") {
       this.memberNameNullFlag = true;
       successFlag = false;
       this.loading = false;
     }
 
-    if (this.paymentForm.value.amount == 0) {
+    if (this.paymentForm.value.amount == null || this.paymentForm.value.amount == undefined || 
+      this.paymentForm.value.amount == 0) {
       this.amountNullFlag = true;
       successFlag = false;
       this.loading = false;

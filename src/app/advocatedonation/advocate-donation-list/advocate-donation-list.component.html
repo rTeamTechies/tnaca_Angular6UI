@@ -73,7 +73,7 @@
       <tbody>
         <tr *ngFor="let item of mf.data">
           <td>{{item.bill_no}}</td>
-          <td>{{item.bill_date | date}}</td>
+          <td>{{item.bill_date | date: 'dd/MM/yyyy'}}</td>
           <td>{{item.adv_name}}</td>
           <td>{{item.amount}}</td>
           <td class="text-center no-print">

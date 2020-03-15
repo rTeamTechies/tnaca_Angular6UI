@@ -126,3 +126,7 @@ input::-webkit-inner-spin-button {
 .nav li a {
     cursor: pointer;
 }
+
+input[readonly]{
+    background-color: #fff !important;
+}

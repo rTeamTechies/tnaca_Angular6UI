@@ -23,6 +23,7 @@ export class LockerAddEditComponent implements OnInit {
   public generatedBillNo: string;
   public amountInWords: string;
   public rollNoNullFlag: boolean = false;
+  public nameNullFlag: boolean = false;
   public fromDateNullFlag: boolean = false;
   public toDateNullFlag: boolean = false;
   public lockerIdNullFlag: boolean = false;
@@ -170,7 +171,7 @@ printBill(item: any){
 
 
 checkLockerAvailability(){
-  if(this.addMemberLocker.value.lockerId.trim() != "" && this.addMemberLocker.value.fromDate != "" && this.addMemberLocker.value.toDate != ""){
+  if(this.addMemberLocker.value.lockerId != null && this.addMemberLocker.value.fromDate != "" && this.addMemberLocker.value.toDate != ""){
     let fromDate = this.datepipe.transform(this.addMemberLocker.value.fromDate, 'yyyy-MM-dd');
     let toDate = this.datepipe.transform(this.addMemberLocker.value.toDate, 'yyyy-MM-dd');
     this.userService.checkLockerAvailability(this.addMemberLocker.value.lockerId, fromDate,toDate)
@@ -187,6 +188,7 @@ checkLockerAvailability(){
 
 removeErrorFlagOnChange(){
   this.rollNoNullFlag = false;
+  this.nameNullFlag = false;
   this.fromDateNullFlag = false;
   this.toDateNullFlag = false;
   this.lockerIdNullFlag = false;
@@ -197,19 +199,23 @@ removeErrorFlagOnChange(){
 formValidation(){
   this.removeErrorFlagOnChange();
   var validFlag = true;
-  if(this.addMemberLocker.value.rollNo == "" || this.addMemberLocker.value.rollNo == 0){
+  if(this.addMemberLocker.value.rollNo == null || this.addMemberLocker.value.rollNo == 0){
     this.rollNoNullFlag = true;
     validFlag = false;
-  }else if(this.addMemberLocker.value.fromDate == ""){
+  }else if(this.addMemberLocker.value.name == null || this.addMemberLocker.value.name == undefined ||
+    this.addMemberLocker.value.name.trim() == ""){
+    this.nameNullFlag = true;
+    validFlag = false;
+  }else if(this.addMemberLocker.value.fromDate == null ||this.addMemberLocker.value.fromDate == ""){
     this.fromDateNullFlag = true;
     validFlag = false;
-  }else if(this.addMemberLocker.value.toDate == ""){
+  }else if(this.addMemberLocker.value.toDate == null || this.addMemberLocker.value.toDate == ""){
     this.toDateNullFlag = true;
     validFlag = false;
-  }else if(this.addMemberLocker.value.lockerId == "" || this.addMemberLocker.value.lockerId == 0){
+  }else if(this.addMemberLocker.value.lockerId == null ||this.addMemberLocker.value.lockerId == "" || this.addMemberLocker.value.lockerId == 0){
     this.lockerIdNullFlag = true;
     validFlag = false;
-  }else if(this.addMemberLocker.value.amount == "" || this.addMemberLocker.value.amount == 0){
+  }else if(this.addMemberLocker.value.amount == null || this.addMemberLocker.value.amount == 0){
     this.amountNullFlag = true;
     validFlag = false;
   }else if(this.lockerUnavailableFlag){

@@ -48,13 +48,13 @@
         </select>
       </div>
       <div class="padding-left-15" *ngIf="searchByDateRange">
-        <input [(ngModel)]="enteredFromDate" [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}" id="enteredFromDate" type="text" autocomplete="off"
-          placeholder="Start Date" bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+        <input [(ngModel)]="enteredFromDate" readonly [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}" id="enteredFromDate" type="text" autocomplete="off"
+          placeholder="Start Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" [bsValue]="bsValue">
       </div>
 
       <div class="padding-left-15" *ngIf="searchByDateRange">
-        <input [(ngModel)]="enteredToDate" [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}" id="enteredToDate" type="text" autocomplete="off" placeholder="End Date"
-          bsDatepicker [bsConfig]="{ isAnimated: true }" [bsValue]="bsValue">
+        <input [(ngModel)]="enteredToDate" readonly [ngClass]="{'inputErrorBorder' : dateRangeNullFlag}" id="enteredToDate" type="text" autocomplete="off" placeholder="End Date"
+          bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" [bsValue]="bsValue">
       </div>
       <div class="padding-left-15">
         <button class="btn btn-success no-print" (click)="generateReport()">Generate</button>
@@ -125,7 +125,7 @@
         <tbody>
           <tr *ngFor="let item of mf.data">
             <td>{{item.bill_no}}</td>
-            <td>{{item.bill_date | date}}</td>
+            <td>{{item.bill_date | date: 'dd/MM/yyyy'}}</td>
             <td>{{item.roll_no}}</td>
             <td>{{item.name}}</td>
             <td>{{item.amount}}</td>
@@ -180,7 +180,7 @@
           <tr *ngFor="let item of mf.data">
             <td>{{item.roll_no}}</td>
             <td>{{item.name}}</td>
-            <td class="no-print">{{item.doj | date}}</td>
+            <td class="no-print">{{item.doj | date: 'dd/MM/yyyy'}}</td>
             <td>{{item.mobile_number}}</td>
             <td class="no-print">{{item.email}}</td>
             <td class="no-print">{{item.advocate_name}}</td>

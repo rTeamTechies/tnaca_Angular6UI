@@ -32,7 +32,7 @@
       <form [formGroup]="paymentForm">
         <div class="form-group">
           <label for="rollNo">Roll No:</label>
-          <input [ngClass]="{'inputErrorBorder' : rollNullFlag}" type="rollNo" formControlName="rollNo" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control"
+          <input [ngClass]="{'inputErrorBorder' : rollNullFlag}" type="number" formControlName="rollNo" autocomplete="off" placeholder="Roll No" name="rollNo" class="form-control"
             id="rollNo" (focusout)="getRollNoDetails()">
           <label class="error-label" *ngIf="rollNullFlag">Roll Number cannot be blank</label>
         </div>
@@ -101,7 +101,7 @@
         <tbody>
           <tr *ngFor="let item of mf.data">
             <td>{{item.bill_no}}</td>
-            <td>{{item.bill_date | date}}</td>
+            <td>{{item.bill_date | date: 'dd/MM/yyyy'}}</td>
             <td>{{item.subscription_year}}</td>
             <td>{{item.amount}}</td>
             <td>{{item.payment_type}}</td>

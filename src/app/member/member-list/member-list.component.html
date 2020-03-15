@@ -186,7 +186,7 @@
                 <td>
                   <div class="mem-detail-attribute-div"><label class="mem-detail-attribute">DOB</label></div>
                   <div class="mem-detail-value-div"><span
-                      class="mem-detail-value">{{memberViewData.dob || "Not Available"}}</span></div>
+                      class="mem-detail-value">{{(memberViewData.dob  | date: 'dd/MM/yyyy': 'dd/MM/yyyy') || "Not Available"}}</span></div>
                 </td>
               </tr>
 

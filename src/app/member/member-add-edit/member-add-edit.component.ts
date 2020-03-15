@@ -96,7 +96,7 @@ export class MemberAddEditComponent implements OnInit {
         inActiveType : ['REMOVED']
       });
       this.addForm = this.formBuilder.group({      
-        rollNo: ['', Validators.required],
+        rollNo: [null, Validators.required],
         name: ['', Validators.required],
         mobileNumber: ['',Validators.required],
         homeAddress : [],
@@ -243,13 +243,13 @@ export class MemberAddEditComponent implements OnInit {
 
   checkMandatoryFields(){
     let successFlag = true;
-    if (this.addForm.value.rollNo == "") {
+    if (this.addForm.value.rollNo == null || this.addForm.value.rollNo == undefined && this.addForm.value.rollNo == 0) {
       this.rollNullFlag = true;
       successFlag = false;
       this.loading = false;
     }
 
-    if (this.addForm.value.name == "") {
+    if (this.addForm.value.name == null || this.addForm.value.name == undefined || this.addForm.value.name.trim() == "") {
       this.nameNullFlag = true;
       successFlag = false;
       this.loading = false;
